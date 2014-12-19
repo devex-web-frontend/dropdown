@@ -1,0 +1,19 @@
+{
+	"name": "DropDown",
+	"version": "2.0.1",
+	"private": true,
+	"license": "MPL-2.0",
+	"main": "src/dropdown.js",
+	"ignore": [
+		".*",
+		"test/**",
+		"Gruntfile.js",
+		"karma.*.js",
+		"bower.json",
+		"package.json"
+	],
+	"dependencies": {
+		"object-array-utils": "git://github.com/devex-web-frontend/object-array-utils.git#2.0.1",
+		"dxjs": "git://github.com/devex-web-frontend/dxjs.git#2.0.3"
+	}
+}
