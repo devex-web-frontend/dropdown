@@ -13,7 +13,7 @@
 		"package.json"
 	],
 	"dependencies": {
-		"object-array-utils": "git://github.com/devex-web-frontend/object-array-utils.git#2.0.1",
-		"dxjs": "git://github.com/devex-web-frontend/dxjs.git#2.0.3"
+		"object-array-utils": "devex-web-frontend/object-array-utils#^2.0.1",
+		"dxjs": "devex-web-frontend/dxjs#^2.0.3"
 	}
 }
