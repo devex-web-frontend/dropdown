@@ -12,6 +12,8 @@
  * @requires DX.Tmpl
  */
 
+
+
 var DropDown = (function(DX, window, document, undefined) {
 	'use strict';
 
@@ -119,6 +121,7 @@ var DropDown = (function(DX, window, document, undefined) {
 	}
 
 	/**
+	 * Creates new dropdown
 	 * @constructor DropDown
 	 * @param {Node|Element} control
 	 * @param {Object} config - {Array:modifiers, String|Number:width, String:optionTmpl, String:groupTmpl, String:innerTmpl}
@@ -132,6 +135,11 @@ var DropDown = (function(DX, window, document, undefined) {
 				hoveredOptionElement,
 				isShownOnce;
 
+		/**
+		 * Dropdown is created
+		 *
+		 * @event dropdown:created
+		 */
 		function init() {
 			config = Object.merge(defaults, (config || {}));
 			elements = createElements(control, config);
@@ -148,7 +156,6 @@ var DropDown = (function(DX, window, document, undefined) {
 				}
 			});
 		}
-
 		function initListeners() {
 			if (elements.list) {
 				elements.list.addEventListener('click', function(e) {
@@ -171,12 +178,24 @@ var DropDown = (function(DX, window, document, undefined) {
 				}, true);
 			}
 		}
-
+		/**
+		 * Sets popup data list
+		 * @method setDataList
+		 * @param {Object} data
+		 */
 		function setDataList(data) {
 			elements.list.innerHTML = getOptionListHTML(data, config);
 			optionElements = DX.$$$('.' + CN_OPTION, elements.list);
 		}
-
+		/**
+		 * Shows dropdown
+		 * @method show
+		 */
+		/**
+		 * Dropdown is shown
+		 *
+		 * @event dropdown:shown
+		 */
 		function show() {
 			var block = elements.block;
 
@@ -194,7 +213,15 @@ var DropDown = (function(DX, window, document, undefined) {
 			document.addEventListener(DX.Event.TOUCH_CLICK, documentClickHandler, true);
 			DX.Event.trigger(block, DropDown.E_SHOWN);
 		}
-
+		/**
+		 * Hides dropdown
+		 * @method hide
+		 */
+		/**
+		 * Dropdown is hidden
+		 *
+		 * @event dropdown:hidden
+		 */
 		function hide() {
 			var block = elements.block;
 
@@ -215,7 +242,17 @@ var DropDown = (function(DX, window, document, undefined) {
 			}
 			return index;
 		}
-
+		/**
+		 * Sets popup selectedelement by index
+		 * @method setSelectedIndex
+		 * @param {Number} index
+		 * @param {bool=} [triggerChangeEvent=false] whether or not trigger dropdown:changed event
+		 */
+		/**
+		 * Dropdown has changed
+		 *
+		 * @event dropdown:changed
+		 */
 		function setSelectedIndex(index, triggerChangeEvent) {
 			if (selectedOptionElement) {
 				DX.Bem.removeModifier(selectedOptionElement, M_SELECTED, CN_OPTION);
@@ -231,7 +268,11 @@ var DropDown = (function(DX, window, document, undefined) {
 				}
 			}
 		}
-
+		/**
+		 * Sets popup hoveredelement by index
+		 * @method setHoveredIndex
+		 * @param {Number} index
+		 */
 		function setHoveredIndex(index) {
 			if (hoveredOptionElement) {
 				DX.Bem.removeModifier(hoveredOptionElement, M_HOVERED, CN_OPTION);
@@ -255,17 +296,36 @@ var DropDown = (function(DX, window, document, undefined) {
 			hoveredIndex = null;
 			hoveredOptionElement = null;
 		}
+		/**
+		 * Gets popup selectedelement by index
+		 * @method getSelectedIndex
+		 * @returns {Number} selectedIndex
+		 */
 		function getSelectedIndex() {
 			return selectedIndex;
 		}
-
+		/**
+		 * Gets popup hoveredelement by index
+		 * @method getHoveredIndex
+		 * @returns {Number} hoveredIndex
+		 */
 		function getHoveredIndex() {
 			return hoveredIndex;
 		}
+
+		/**
+		 * Gets HTMLNode containing dropdown
+		 * @method getBlock
+		 * @returns {Node}
+		 */
 		function getBlock() {
 			return elements.block;
 		}
-
+		/**
+		 * Gets element which listens to events
+		 * @method getEventTarget
+		 * @returns {Node}
+		 */
 		function getEventTarget() {
 			return elements.block;
 		}
@@ -285,7 +345,11 @@ var DropDown = (function(DX, window, document, undefined) {
 				hide();
 			}
 		}
-
+		/**
+		 * Gets whether dropdown is shown
+		 * @method isShown
+		 * @returns {bool}
+		 */
 		function isShown() {
 			return DX.Bem.hasModifier(elements.block, M_SHOWN, CN_DROPDOWN);
 		}
