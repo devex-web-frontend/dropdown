@@ -56,7 +56,6 @@ module.exports = function(grunt) {
 				dest: "doc/documentation.md"
 			}
 		},
-
 		shell: {
 			install: {
 				command: 'node node_modules/bower/bin/bower install'

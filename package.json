@@ -10,9 +10,10 @@
     "grunt-contrib-jshint": "~0.6.2",
     "grunt-interactive-shell": "git://github.com/devex-web-frontend/grunt-interactive-shell#v1.0.0",
     "grunt-jscs-checker": "~0.4.3",
-    "grunt-jsdoc-to-markdown": "^0.4.2",
-    "grunt-karma": "~0.6.2",
     "grunt-jsdoc": "^0.5.7",
+    "grunt-jsdoc-to-markdown": "^0.4.2",
+    "grunt-jsdox": "^0.1.7",
+    "grunt-karma": "~0.6.2",
     "karma-coverage": "~0.2.1"
   },
   "scripts": {

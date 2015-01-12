@@ -10,6 +10,7 @@
  * @requires DX.Event
  * @requires DX.String
  * @requires DX.Tmpl
+ * @namespace
  */
 
 
@@ -368,9 +369,28 @@ var DropDown = (function(DX, window, document, undefined) {
 		this.getEventTarget = getEventTarget;
 	};
 })(DX, window, document);
-
+/** @constant
+ * @type {string}
+ * @default
+ * @memberof DropDown
+ */
 DropDown.E_CREATED = 'dropdown:created';
+/** @constant
+ * @type {string}
+ * @default
+ * @memberof DropDown
+ */
 DropDown.E_SHOWN = 'dropdown:shown';
+/** @constant
+ * @type {string}
+ * @default
+ * @memberof DropDown
+ */
 DropDown.E_HIDDEN = 'dropdown:hidden';
+/** @constant
+ * @type {string}
+ * @default
+ * @memberof DropDown
+ */
 DropDown.E_CHANGED = 'dropdown:changed';
 

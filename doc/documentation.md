@@ -4,6 +4,18 @@
 
 * [class: DropDown](#DropDown)
   * [new DropDown(control, config)](#new_DropDown)
+  * [const: DropDown.E_CREATED](#DropDown.E_CREATED)
+  * [const: DropDown.E_SHOWN](#DropDown.E_SHOWN)
+  * [const: DropDown.E_HIDDEN](#DropDown.E_HIDDEN)
+  * [const: DropDown.E_CHANGED](#DropDown.E_CHANGED)
+
+**Namespaces**
+
+* [DropDown](#DropDown)
+  * [const: DropDown.E_CREATED](#DropDown.E_CREATED)
+  * [const: DropDown.E_SHOWN](#DropDown.E_SHOWN)
+  * [const: DropDown.E_HIDDEN](#DropDown.E_HIDDEN)
+  * [const: DropDown.E_CHANGED](#DropDown.E_CHANGED)
 
 **Events**
 
@@ -24,10 +36,6 @@
 * [getBlock()](#getBlock)
 * [getEventTarget()](#getEventTarget)
 * [isShown()](#isShown)
-
-**Members**
-
-* [DropDown](#DropDown)
  
 <a name="DropDown"></a>
 #class: DropDown
@@ -35,6 +43,10 @@
 
 * [class: DropDown](#DropDown)
   * [new DropDown(control, config)](#new_DropDown)
+  * [const: DropDown.E_CREATED](#DropDown.E_CREATED)
+  * [const: DropDown.E_SHOWN](#DropDown.E_SHOWN)
+  * [const: DropDown.E_HIDDEN](#DropDown.E_HIDDEN)
+  * [const: DropDown.E_CHANGED](#DropDown.E_CHANGED)
 
 <a name="new_DropDown"></a>
 ##new DropDown(control, config)
@@ -45,6 +57,49 @@ Creates new dropdown
 - control `Node` | `Element`  
 - config `Object` - {Array:modifiers, String|Number:width, String:optionTmpl, String:groupTmpl, String:innerTmpl}  
 
+<a name="DropDown.E_CREATED"></a>
+##const: DropDown.E_CREATED
+**Type**: `string`  
+**Default**: `dropdown:created`  
+<a name="DropDown.E_SHOWN"></a>
+##const: DropDown.E_SHOWN
+**Type**: `string`  
+**Default**: `dropdown:shown`  
+<a name="DropDown.E_HIDDEN"></a>
+##const: DropDown.E_HIDDEN
+**Type**: `string`  
+**Default**: `dropdown:hidden`  
+<a name="DropDown.E_CHANGED"></a>
+##const: DropDown.E_CHANGED
+**Type**: `string`  
+**Default**: `dropdown:changed`  
+<a name="DropDown"></a>
+#DropDown
+**Copyright**: Devexperts  
+**Members**
+
+* [DropDown](#DropDown)
+  * [const: DropDown.E_CREATED](#DropDown.E_CREATED)
+  * [const: DropDown.E_SHOWN](#DropDown.E_SHOWN)
+  * [const: DropDown.E_HIDDEN](#DropDown.E_HIDDEN)
+  * [const: DropDown.E_CHANGED](#DropDown.E_CHANGED)
+
+<a name="DropDown.E_CREATED"></a>
+##const: DropDown.E_CREATED
+**Type**: `string`  
+**Default**: `dropdown:created`  
+<a name="DropDown.E_SHOWN"></a>
+##const: DropDown.E_SHOWN
+**Type**: `string`  
+**Default**: `dropdown:shown`  
+<a name="DropDown.E_HIDDEN"></a>
+##const: DropDown.E_HIDDEN
+**Type**: `string`  
+**Default**: `dropdown:hidden`  
+<a name="DropDown.E_CHANGED"></a>
+##const: DropDown.E_CHANGED
+**Type**: `string`  
+**Default**: `dropdown:changed`  
 <a name="dropdown_created"></a>
 #event: "dropdown:created"
 Dropdown is created
@@ -119,6 +174,3 @@ Gets element which listens to events
 Gets whether dropdown is shown
 
 **Returns**: `bool`  
-<a name="DropDown"></a>
-#DropDown
-**Copyright**: Devexperts  
