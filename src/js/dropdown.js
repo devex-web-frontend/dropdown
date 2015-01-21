@@ -16,7 +16,7 @@
 
 
 var DropDown = (function(DX, window, document, undefined) {
-	'use strict';P
+	'use strict';
 
 	var CN_DROPDOWN = 'dropDown',
 			M_SHOWN = 'shown',
