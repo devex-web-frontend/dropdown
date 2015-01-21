@@ -152,6 +152,27 @@ describe('DropDown', function() {
 			expect(ddElement.classList.contains('dropDown-hidden')).toBe(true);
 		});
 
+		it('should hide all dropdowns on esc', function() {
+			var ddElement,
+				event;
+
+			document.body.innerHTML += '<div id="test1"></div>';
+
+			new DropDown(testElement);
+			new DropDown(document.getElementById('test1'))
+
+			event = document.createEvent('UIEvents');
+			event.initUIEvent('keydown', false, false);
+			event.key = 27;
+
+			document.dispatchEvent(event);
+
+			waitsFor(function() {
+				return document.querySelectorAll('.dropDown-hidden').length === 0
+			}, "All dropdowns were closed", 300);
+
+		});
+
 		it('should remove "-shown" modifier from the container', function() {
 			var ddElement;
 

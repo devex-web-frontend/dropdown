@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<script src="../../lib/es5-shim/es5-shim.js"></script>
+	<script type="text/javascript" src="../../lib/object-array-utils/src/array.js"></script>
+	<script type="text/javascript" src="../../lib/object-array-utils/src/object.js"></script>
+	<script type="text/javascript" src="../../lib/dxjs/src/dx.core.js"></script>
+	<script type="text/javascript" src="../../lib/dxjs/src/dx.bem.js"></script>
+	<script type="text/javascript" src="../../lib/dxjs/src/dx.date.js"></script>
+	<script type="text/javascript" src="../../lib/dxjs/src/dx.dom.js"></script>
+	<script type="text/javascript" src="../../lib/dxjs/src/dx.event.js"></script>
+	<script type="text/javascript" src="../../lib/dxjs/src/dx.measure.js"></script>
+	<script type="text/javascript" src="../../lib/dxjs/src/dx.string.js"></script>
+	<script type="text/javascript" src="../../lib/dxjs/src/dx.tmpl.js"></script>
+	<script type="text/javascript" src="../../src/js/dropdown.js"></script>
+	<link rel="stylesheet" media="all" href="../css/dropDown.css">
+
+</head>
+<body>
+	<div name="test" id="test">
+	</div>
+	<div name="test2" id="test2">
+	</div>
+<script type="text/javascript">
+	var dropdown = new DropDown(document.getElementById('test'));
+	dropdown.show();
+	var dropdown2 = new DropDown(document.getElementById('test2'));
+	dropdown2.show();
+</script>
+</body>
+</html>

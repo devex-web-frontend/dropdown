@@ -8,6 +8,7 @@
   * [const: DropDown.E_SHOWN](#DropDown.E_SHOWN)
   * [const: DropDown.E_HIDDEN](#DropDown.E_HIDDEN)
   * [const: DropDown.E_CHANGED](#DropDown.E_CHANGED)
+  * [const: DropDown.E_HIDE](#DropDown.E_HIDE)
 
 **Namespaces**
 
@@ -16,12 +17,14 @@
   * [const: DropDown.E_SHOWN](#DropDown.E_SHOWN)
   * [const: DropDown.E_HIDDEN](#DropDown.E_HIDDEN)
   * [const: DropDown.E_CHANGED](#DropDown.E_CHANGED)
+  * [const: DropDown.E_HIDE](#DropDown.E_HIDE)
 
 **Events**
 
+* [event: "dropdown:hidden"](#dropdown_hidden)
 * [event: "dropdown:created"](#dropdown_created)
 * [event: "dropdown:shown"](#dropdown_shown)
-* [event: "dropdown:hidden"](#dropdown_hidden)
+* [event: "dropdown:hide"](#dropdown_hide)
 * [event: "dropdown:changed"](#dropdown_changed)
 
 **Functions**
@@ -47,6 +50,7 @@
   * [const: DropDown.E_SHOWN](#DropDown.E_SHOWN)
   * [const: DropDown.E_HIDDEN](#DropDown.E_HIDDEN)
   * [const: DropDown.E_CHANGED](#DropDown.E_CHANGED)
+  * [const: DropDown.E_HIDE](#DropDown.E_HIDE)
 
 <a name="new_DropDown"></a>
 ##new DropDown(control, config)
@@ -73,6 +77,10 @@ Creates new dropdown
 ##const: DropDown.E_CHANGED
 **Type**: `string`  
 **Default**: `dropdown:changed`  
+<a name="DropDown.E_HIDE"></a>
+##const: DropDown.E_HIDE
+**Type**: `string`  
+**Default**: `dropdown:hide`  
 <a name="DropDown"></a>
 #DropDown
 **Copyright**: Devexperts  
@@ -83,6 +91,7 @@ Creates new dropdown
   * [const: DropDown.E_SHOWN](#DropDown.E_SHOWN)
   * [const: DropDown.E_HIDDEN](#DropDown.E_HIDDEN)
   * [const: DropDown.E_CHANGED](#DropDown.E_CHANGED)
+  * [const: DropDown.E_HIDE](#DropDown.E_HIDE)
 
 <a name="DropDown.E_CREATED"></a>
 ##const: DropDown.E_CREATED
@@ -100,6 +109,14 @@ Creates new dropdown
 ##const: DropDown.E_CHANGED
 **Type**: `string`  
 **Default**: `dropdown:changed`  
+<a name="DropDown.E_HIDE"></a>
+##const: DropDown.E_HIDE
+**Type**: `string`  
+**Default**: `dropdown:hide`  
+<a name="dropdown_hidden"></a>
+#event: "dropdown:hidden"
+Dropdown is hidden
+
 <a name="dropdown_created"></a>
 #event: "dropdown:created"
 Dropdown is created
@@ -108,9 +125,9 @@ Dropdown is created
 #event: "dropdown:shown"
 Dropdown is shown
 
-<a name="dropdown_hidden"></a>
-#event: "dropdown:hidden"
-Dropdown is hidden
+<a name="dropdown_hide"></a>
+#event: "dropdown:hide"
+Hide dropdown
 
 <a name="dropdown_changed"></a>
 #event: "dropdown:changed"

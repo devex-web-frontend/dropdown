@@ -16,7 +16,7 @@
 
 
 var DropDown = (function(DX, window, document, undefined) {
-	'use strict';
+	'use strict';P
 
 	var CN_DROPDOWN = 'dropDown',
 			M_SHOWN = 'shown',
@@ -31,6 +31,7 @@ var DropDown = (function(DX, window, document, undefined) {
 			CN_GROUP_TITLE = CN_DROPDOWN + '--groupTitle',
 			CN_ARROW = CN_DROPDOWN + '--arrow',
 			A_FOR = 'data-for',
+			ESC_KEY_CODE = 27,
 			defaults = {
 				modifiers: [],
 				width: 'control',
@@ -121,6 +122,24 @@ var DropDown = (function(DX, window, document, undefined) {
 		};
 	}
 
+	function keyDownHandler(e) {
+
+		var key;
+		key = e.key || e.which;
+		if (key === ESC_KEY_CODE || key === 'Escape') {
+			setTimeout(hideAllDropDowns, 0);
+		}
+
+	}
+	function hideAllDropDowns() {
+		var dropDownsArray = DX.$$$('.' + CN_DROPDOWN);
+		Array.prototype.forEach.call(dropDownsArray, function(dropdown) {
+			DX.Event.trigger(dropdown, DropDown.E_HIDE);
+		});
+
+	}
+
+	document.addEventListener(DX.Event.KEY_DOWN, keyDownHandler);
 	/**
 	 * Creates new dropdown
 	 * @constructor DropDown
@@ -158,6 +177,9 @@ var DropDown = (function(DX, window, document, undefined) {
 			});
 		}
 		function initListeners() {
+			var block = getEventTarget();
+			block.addEventListener(DropDown.E_HIDE, hide);
+
 			if (elements.list) {
 				elements.list.addEventListener('click', function(e) {
 					var optionElement = DX.Dom.getAscendantByClassName(e.target, CN_OPTION),
@@ -223,6 +245,11 @@ var DropDown = (function(DX, window, document, undefined) {
 		 *
 		 * @event dropdown:hidden
 		 */
+		/**
+		 * Hide dropdown
+		 *
+		 * @event dropdown:hide
+		 */
 		function hide() {
 			var block = elements.block;
 
@@ -233,6 +260,7 @@ var DropDown = (function(DX, window, document, undefined) {
 			document.removeEventListener(DX.Event.TOUCH_CLICK, documentClickHandler, true);
 			DX.Event.trigger(block, DropDown.E_HIDDEN);
 		}
+
 
 		function normalizeIndex(index) {
 			if (index <= 0) {
@@ -393,4 +421,10 @@ DropDown.E_HIDDEN = 'dropdown:hidden';
  * @memberof DropDown
  */
 DropDown.E_CHANGED = 'dropdown:changed';
+/** @constant
+ * @type {string}
+ * @default
+ * @memberof DropDown
+ */
+DropDown.E_HIDE = 'dropdown:hide';
 
