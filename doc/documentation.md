@@ -4,6 +4,7 @@
 
 * [class: DropDown](#DropDown)
   * [new DropDown(control, config)](#new_DropDown)
+  * [DropDown.isAnyShown()](#DropDown.isAnyShown)
   * [const: DropDown.E_CREATED](#DropDown.E_CREATED)
   * [const: DropDown.E_SHOWN](#DropDown.E_SHOWN)
   * [const: DropDown.E_HIDDEN](#DropDown.E_HIDDEN)
@@ -13,6 +14,7 @@
 **Namespaces**
 
 * [DropDown](#DropDown)
+  * [DropDown.isAnyShown()](#DropDown.isAnyShown)
   * [const: DropDown.E_CREATED](#DropDown.E_CREATED)
   * [const: DropDown.E_SHOWN](#DropDown.E_SHOWN)
   * [const: DropDown.E_HIDDEN](#DropDown.E_HIDDEN)
@@ -46,6 +48,7 @@
 
 * [class: DropDown](#DropDown)
   * [new DropDown(control, config)](#new_DropDown)
+  * [DropDown.isAnyShown()](#DropDown.isAnyShown)
   * [const: DropDown.E_CREATED](#DropDown.E_CREATED)
   * [const: DropDown.E_SHOWN](#DropDown.E_SHOWN)
   * [const: DropDown.E_HIDDEN](#DropDown.E_HIDDEN)
@@ -61,6 +64,11 @@ Creates new dropdown
 - control `Node` | `Element`  
 - config `Object` - {Array:modifiers, String|Number:width, String:optionTmpl, String:groupTmpl, String:innerTmpl}  
 
+<a name="DropDown.isAnyShown"></a>
+##DropDown.isAnyShown()
+Gets if there is any shown dropdown
+
+**Returns**: `Boolean`  
 <a name="DropDown.E_CREATED"></a>
 ##const: DropDown.E_CREATED
 **Type**: `string`  
@@ -87,12 +95,18 @@ Creates new dropdown
 **Members**
 
 * [DropDown](#DropDown)
+  * [DropDown.isAnyShown()](#DropDown.isAnyShown)
   * [const: DropDown.E_CREATED](#DropDown.E_CREATED)
   * [const: DropDown.E_SHOWN](#DropDown.E_SHOWN)
   * [const: DropDown.E_HIDDEN](#DropDown.E_HIDDEN)
   * [const: DropDown.E_CHANGED](#DropDown.E_CHANGED)
   * [const: DropDown.E_HIDE](#DropDown.E_HIDE)
 
+<a name="DropDown.isAnyShown"></a>
+##DropDown.isAnyShown()
+Gets if there is any shown dropdown
+
+**Returns**: `Boolean`  
 <a name="DropDown.E_CREATED"></a>
 ##const: DropDown.E_CREATED
 **Type**: `string`  

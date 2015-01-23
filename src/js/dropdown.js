@@ -13,8 +13,6 @@
  * @namespace
  */
 
-
-
 var DropDown = (function(DX, window, document, undefined) {
 	'use strict';
 
@@ -52,6 +50,7 @@ var DropDown = (function(DX, window, document, undefined) {
 				].join(''),
 				hideOnClick: true
 			};
+
 
 	function rePosition(block, control) {
 		var offset = DX.Measure.getPosition(control);
@@ -129,7 +128,6 @@ var DropDown = (function(DX, window, document, undefined) {
 		if (key === ESC_KEY_CODE || key === 'Escape') {
 			setTimeout(hideAllDropDowns, 0);
 		}
-
 	}
 	function hideAllDropDowns() {
 		var dropDownsArray = DX.$$$('.' + CN_DROPDOWN);
@@ -397,6 +395,7 @@ var DropDown = (function(DX, window, document, undefined) {
 		this.getEventTarget = getEventTarget;
 	};
 })(DX, window, document);
+
 /** @constant
  * @type {string}
  * @default
@@ -427,4 +426,16 @@ DropDown.E_CHANGED = 'dropdown:changed';
  * @memberof DropDown
  */
 DropDown.E_HIDE = 'dropdown:hide';
+/**
+ * Gets if there is any shown dropdown
+ * @method isAnyShown
+ * @static
+ * @memberof DropDown
+ * @returns {Boolean}
+ */
+DropDown.isAnyShown = function() {
+	'use strict';
+	return document.querySelectorAll('.dropDown-shown').length > 0;
+};
+
 

@@ -292,6 +292,31 @@ describe('DropDown', function() {
 		});
 	});
 
+	describe('#isAnyShown()', function() {
+		it('should return true if there is any shown dropdown', function() {
+			var firstDD,
+				secondDD;
+
+			document.body.innerHTML += '<div id="test1"></div>';
+
+			firstDD = new DropDown(testElement);
+			secondDD = new DropDown(document.getElementById('test1'));
+			secondDD.show();
+			expect(DropDown.isAnyShown()).toBe(true);
+		});
+		it('should return false if there is no shown dropdown', function() {
+			var firstDD,
+				secondDD;
+
+			document.body.innerHTML += '<div id="test1"></div>';
+
+			firstDD = new DropDown(testElement);
+			secondDD = new DropDown(document.getElementById('test1'));
+
+			expect(DropDown.isAnyShown()).toBe(false);
+		});
+	});
+
 	describe('Constants', function() {
 		it('should provide event names as public constants', function() {
 			expect(DropDown.E_CHANGED).toBe('dropdown:changed');
