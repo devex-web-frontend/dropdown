@@ -139,6 +139,34 @@ describe('DropDown', function() {
 			dropDown.show();
 			expect(shownEventHandler).toHaveBeenCalled();
 		});
+
+		it('should add "touchend" and "click" listeners on document', function(){
+
+			spyOn(document, 'addEventListener');
+			dropDown = new DropDown(testElement);
+			dropDown.show();
+
+			expect(document.addEventListener).toHaveBeenCalled();
+			expect(document.addEventListener.argsForCall[0][0]).toEqual('touchend');
+			expect(document.addEventListener.argsForCall[1][0]).toEqual('click');
+		});
+
+		it('should call "event.preventDefault" on "touchend"', function() {
+
+			var preventMock = {
+				preventDefault: jasmine.createSpy('preventDefault')
+			};
+
+			dropDown = new DropDown(testElement);
+			spyOn(document, 'addEventListener').andCallFake(function(event, cb) {
+				cb(preventMock);
+			});
+
+			dropDown.show();
+
+			expect(preventMock.preventDefault).toHaveBeenCalled();
+		});
+
 	});
 
 	describe('#hide()', function() {
@@ -150,6 +178,38 @@ describe('DropDown', function() {
 			dropDown.hide();
 
 			expect(ddElement.classList.contains('dropDown-hidden')).toBe(true);
+		});
+
+		it('should hide dropdown on "click"', function() {
+			var event;
+
+			new DropDown(testElement);
+
+			event = document.createEvent('UIEvents');
+			event.initUIEvent('click', false, false);
+
+			document.dispatchEvent(event);
+
+			waitsFor(function() {
+				return document.querySelectorAll('.dropDown-hidden').length === 0
+			}, "All dropdowns were closed", 300);
+
+		});
+
+		it('should hide dropdown on "touchend"', function() {
+			var event;
+
+			new DropDown(testElement);
+
+			event = document.createEvent('UIEvents');
+			event.initUIEvent('touchend', false, false);
+
+			document.dispatchEvent(event);
+
+			waitsFor(function() {
+				return document.querySelectorAll('.dropDown-hidden').length === 0
+			}, "All dropdowns were closed", 300);
+
 		});
 
 		it('should hide all dropdowns on esc', function() {
