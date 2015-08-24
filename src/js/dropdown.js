@@ -53,10 +53,26 @@ var DropDown = (function(DX, window, document, undefined) {
 
 
 	function rePosition(block, control) {
-		var offset = DX.Measure.getPosition(control);
-
-		block.style.top = offset.y + DX.Measure.getSize(control, true).height + 'px';
+		var offset = DX.Measure.getPosition(control),
+			controlPosition = control.getBoundingClientRect(),
+			blockPosition,
+			upDirectionTopCoordinates;
+		
+		block.style.top = offset.y + controlPosition.height + 'px';
 		block.style.left = offset.x + 'px';
+		
+		blockPosition = block.getBoundingClientRect();
+		
+		upDirectionTopCoordinates = controlPosition.top - blockPosition.height + controlPosition.height;
+		
+		if (blockPosition.top + blockPosition.height > window.innerHeight && upDirectionTopCoordinates > 0) {
+			block.style.top = upDirectionTopCoordinates + 'px';
+		}
+		
+		if (blockPosition.left + blockPosition.width > window.innerWidth) {
+			block.style.left = controlPosition.left - blockPosition.width + controlPosition.width + 'px';
+		}
+
 	}
 
 	function reCalculateWidth(block, control, config) {
