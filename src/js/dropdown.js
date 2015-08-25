@@ -243,9 +243,10 @@ var DropDown = (function(DX, window, document, undefined) {
 
 			setHoveredIndex(0);
 
-			rePosition(block, control);
+
 			DX.Bem.removeModifier(block, M_HIDDEN, CN_DROPDOWN);
 			DX.Bem.addModifier(block, M_SHOWN, CN_DROPDOWN);
+			rePosition(block, control);
 
 			document.addEventListener('touchend', function(e) {
 				documentClickHandler(e);
