@@ -140,7 +140,7 @@ describe('DropDown', function() {
 			expect(shownEventHandler).toHaveBeenCalled();
 		});
 
-		it('should add "touchend" and "click" listeners on document', function(){
+		it('should add "touchend" and "mousedown" listeners on document', function(){
 
 			spyOn(document, 'addEventListener');
 			dropDown = new DropDown(testElement);
@@ -148,7 +148,7 @@ describe('DropDown', function() {
 
 			expect(document.addEventListener).toHaveBeenCalled();
 			expect(document.addEventListener.argsForCall[0][0]).toEqual('touchend');
-			expect(document.addEventListener.argsForCall[1][0]).toEqual('click');
+			expect(document.addEventListener.argsForCall[1][0]).toEqual('mousedown');
 		});
 
 		it('should call "event.preventDefault" on "touchend"', function() {
