@@ -57,22 +57,22 @@ var DropDown = (function(DX, window, document, undefined) {
 			controlPosition = control.getBoundingClientRect(),
 			blockPosition,
 			upDirectionTopCoordinates,
-			leftDirectionTopCoordinates;
+			leftDirectionLeftCoordinates;
 
 		block.style.top = offset.y + controlPosition.height + 'px';
 		block.style.left = offset.x + 'px';
 
 		blockPosition = block.getBoundingClientRect();
 
-		upDirectionTopCoordinates = controlPosition.top - blockPosition.height + controlPosition.height;
-		leftDirectionTopCoordinates = controlPosition.left - blockPosition.width + controlPosition.width;
+		upDirectionTopCoordinates =  document.body.scrollTop + controlPosition.top - blockPosition.height + controlPosition.height;
+		leftDirectionLeftCoordinates = document.body.scrollLeft + controlPosition.left - blockPosition.width + controlPosition.width;
 
 		if (blockPosition.top + blockPosition.height > window.innerHeight && upDirectionTopCoordinates > 0) {
 			block.style.top = upDirectionTopCoordinates + 'px';
 		}
 
-		if (leftDirectionTopCoordinates > window.innerWidth) {
-			block.style.left = leftDirectionTopCoordinates + 'px';
+		if (blockPosition.left + blockPosition.width > window.innerWidth && leftDirectionLeftCoordinates > 0) {
+			block.style.left = leftDirectionLeftCoordinates + 'px';
 		}
 	}
 
