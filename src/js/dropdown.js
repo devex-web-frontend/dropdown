@@ -53,10 +53,27 @@ var DropDown = (function(DX, window, document, undefined) {
 
 
 	function rePosition(block, control) {
-		var offset = DX.Measure.getPosition(control);
+		var offset = DX.Measure.getPosition(control),
+			controlPosition = control.getBoundingClientRect(),
+			blockPosition,
+			upDirectionTopCoordinates,
+			leftDirectionLeftCoordinates;
 
-		block.style.top = offset.y + DX.Measure.getSize(control, true).height + 'px';
+		block.style.top = offset.y + controlPosition.height + 'px';
 		block.style.left = offset.x + 'px';
+
+		blockPosition = block.getBoundingClientRect();
+
+		upDirectionTopCoordinates =  document.body.scrollTop + controlPosition.top - blockPosition.height + controlPosition.height;
+		leftDirectionLeftCoordinates = document.body.scrollLeft + controlPosition.left - blockPosition.width + controlPosition.width;
+
+		if (blockPosition.top + blockPosition.height > window.innerHeight && upDirectionTopCoordinates > 0) {
+			block.style.top = upDirectionTopCoordinates + 'px';
+		}
+
+		if (blockPosition.left + blockPosition.width > window.innerWidth && leftDirectionLeftCoordinates > 0) {
+			block.style.left = leftDirectionLeftCoordinates + 'px';
+		}
 	}
 
 	function reCalculateWidth(block, control, config) {
@@ -227,9 +244,10 @@ var DropDown = (function(DX, window, document, undefined) {
 
 			setHoveredIndex(0);
 
-			rePosition(block, control);
+
 			DX.Bem.removeModifier(block, M_HIDDEN, CN_DROPDOWN);
 			DX.Bem.addModifier(block, M_SHOWN, CN_DROPDOWN);
+			rePosition(block, control);
 
 			document.addEventListener('touchend', function(e) {
 				documentClickHandler(e);
