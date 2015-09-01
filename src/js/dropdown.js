@@ -254,7 +254,7 @@ var DropDown = (function(DX, window, document, undefined) {
 				e.preventDefault();
 			}, true);
 
-			document.addEventListener('click', function(e) {
+			document.addEventListener('mousedown', function(e) {
 				documentClickHandler(e);
 			}, true);
 
