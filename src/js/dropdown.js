@@ -86,7 +86,7 @@ var DropDown = (function(DX, window, document, undefined) {
 
 	function getOptionListHTML(data, config) {
 		return data.reduce(function(prevValue, item) {
-			return prevValue + (item.title ? getOptgroupHTML(item, config) : getOptionHTML(item, config.optionTmpl));
+			return prevValue + ((item.title || item.title === '') ? getOptgroupHTML(item, config) : getOptionHTML(item, config.optionTmpl));
 		}, '');
 	}
 

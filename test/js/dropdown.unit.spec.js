@@ -270,6 +270,44 @@ describe('DropDown', function() {
 		});
 	});
 
+	describe('#groupOptions', function(){
+
+		function createGroup(title) {
+			return {
+				title: title || '',
+				options: [
+					{
+						value: 'batman'
+					}
+				]
+			}
+		}
+
+		it('should create the same number group', function() {
+
+			dropDown = new DropDown(testElement);
+
+			var newData = data.slice();
+			newData.push(createGroup('test'));
+
+			dropDown.setDataList(newData);
+
+			expect(document.querySelectorAll('.dropDown--group').length).toEqual(1);
+		});
+
+		it('should not ignored group with blank title', function() {
+
+			dropDown = new DropDown(testElement);
+			var newData = data.slice();
+
+			newData.push(createGroup(''));
+			dropDown.setDataList(newData);
+
+			expect(document.querySelectorAll('.dropDown--group').length).toEqual(1);
+		});
+
+	});
+
 	describe('#setDataList()', function() {
 		it('should create the same number of options as in data', function() {
 			dropDown = new DropDown(testElement);
