@@ -2,7 +2,6 @@
  * @copyright Devexperts
  *
  * @requires Object.clone
- * @requires Object.merge
  * @requires DX
  * @requires DX.Measure
  * @requires DX.Dom
@@ -91,7 +90,7 @@ var DropDown = (function(DX, window, document, undefined) {
 	}
 
 	function getOptgroupHTML(data, config) {
-		data = Object.clone(data);
+		data = Object.assign({}, data);
 		data.optionList = getOptionListHTML(data.options, config);
 
 		return DX.Tmpl.process(config.groupTmpl, data);
@@ -100,11 +99,12 @@ var DropDown = (function(DX, window, document, undefined) {
 	function getOptionHTML(data, template) {
 		var dataAttrs = '';
 
-		data = Object.clone(data);
+		data = Object.assign({},data);
 		data.classNames = DX.Bem.createModifiedClassName(CN_OPTION, data.modifiers);
 
 		if (data.data) {
-			Object.forEach(data.data, function(item, key) {
+			Object.keys(data.data).forEach(function(key) {
+				var item = data.data[key];
 				dataAttrs += 'data-' + DX.String.hyphenate(key) + '="' + item + '" ';
 			});
 
@@ -163,12 +163,12 @@ var DropDown = (function(DX, window, document, undefined) {
 	 */
 	return function DropDown(control, config) {
 		var elements,
-				selectedIndex,
-				hoveredIndex,
-				optionElements,
-				selectedOptionElement,
-				hoveredOptionElement,
-				isShownOnce;
+			selectedIndex,
+			hoveredIndex,
+			optionElements,
+			selectedOptionElement,
+			hoveredOptionElement,
+			isShownOnce;
 
 		/**
 		 * Dropdown is created
@@ -176,7 +176,7 @@ var DropDown = (function(DX, window, document, undefined) {
 		 * @event dropdown:created
 		 */
 		function init() {
-			config = Object.merge(defaults, (config || {}));
+			config = Object.assign(defaults, (config || {}));
 			elements = createElements(control, config);
 			selectedIndex = 0;
 			hoveredIndex = null;
