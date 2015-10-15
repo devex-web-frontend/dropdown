@@ -283,7 +283,7 @@ describe('DropDown', function() {
 			}
 		}
 
-		it('should create the same number group', function() {
+		it('should create the same number of groups', function() {
 
 			dropDown = new DropDown(testElement);
 
@@ -295,7 +295,7 @@ describe('DropDown', function() {
 			expect(document.querySelectorAll('.dropDown--group').length).toEqual(1);
 		});
 
-		it('should not ignored group with blank title', function() {
+		it('should not ignore group with blank title', function() {
 
 			dropDown = new DropDown(testElement);
 			var newData = data.slice();
