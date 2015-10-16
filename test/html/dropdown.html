@@ -25,8 +25,26 @@
 	</div>
 <script type="text/javascript">
 	var dropdown = new DropDown(document.getElementById('test'));
+	var data = [
+		{
+			title: 'dasd',
+			options: [
+				{value: 'superman', text: 'superman'},
+				{value: 'batman',  text: 'batman'},
+				{value: 'flash',  text: 'flash'}
+			]
+		}
+	];
 	dropdown.show();
+	dropdown.setDataList(data);
+
 	var dropdown2 = new DropDown(document.getElementById('test2'));
+	var data2 = [
+		{value: 'superman', text: 'superman'},
+		{value: 'batman',  text: 'batman'},
+		{value: 'flash',  text: 'flash'}
+	];
+	dropdown2.setDataList(data2);
 	dropdown2.show();
 </script>
 </body>

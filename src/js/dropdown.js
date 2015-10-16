@@ -50,6 +50,15 @@ var DropDown = (function(DX, window, document, undefined) {
 				hideOnClick: true
 			};
 
+	/**
+	 * Check is object variable
+	 * @param {*} param
+	 * @returns {boolean}
+	 */
+	function isObject(param) {
+		var type = typeof param;
+		return type === 'object' && !Array.isArray(param);
+	}
 
 	function rePosition(block, control) {
 		var offset = DX.Measure.getPosition(control),
@@ -85,7 +94,12 @@ var DropDown = (function(DX, window, document, undefined) {
 
 	function getOptionListHTML(data, config) {
 		return data.reduce(function(prevValue, item) {
-			return prevValue + (item.title ? getOptgroupHTML(item, config) : getOptionHTML(item, config.optionTmpl));
+			var result = '';
+			if (isObject(item)) {
+				var isItGroup = Array.isArray(item.options);
+				result = prevValue + (isItGroup ? getOptgroupHTML(item, config) : getOptionHTML(item, config.optionTmpl));
+			}
+			return result;
 		}, '');
 	}
 
