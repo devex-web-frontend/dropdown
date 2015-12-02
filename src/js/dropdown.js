@@ -264,11 +264,6 @@ var DropDown = (function(DX, window, document, undefined) {
 			DX.Bem.addModifier(block, M_SHOWN, CN_DROPDOWN);
 			rePosition(block, control);
 
-			document.addEventListener('touchend', function(e) {
-				documentClickHandler(e);
-				e.preventDefault();
-			}, true);
-
 			document.addEventListener('mousedown', function(e) {
 				documentClickHandler(e);
 			}, true);
