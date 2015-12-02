@@ -190,7 +190,7 @@ var DropDown = (function(DX, window, document, undefined) {
 		 * @event dropdown:created
 		 */
 		function init() {
-			config = Object.assign(defaults, (config || {}));
+			config = Object.assign({}, defaults, (config || {}));
 			elements = createElements(control, config);
 			selectedIndex = 0;
 			hoveredIndex = null;
