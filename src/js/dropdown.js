@@ -29,7 +29,7 @@ var DropDown = (function(DX, window, document, undefined) {
 			CN_ARROW = CN_DROPDOWN + '--arrow',
 			A_FOR = 'data-for',
 			ESC_KEY_CODE = 27,
-			defaults = {
+			GLOBAL_DEFAULTS = {
 				modifiers: [],
 				width: 'control',
 				optionTmpl: '<li class="{%= classNames %}" value="{%= value %}" {%= dataAttrs %}>{%= text %}</li>',
@@ -182,7 +182,8 @@ var DropDown = (function(DX, window, document, undefined) {
 			optionElements,
 			selectedOptionElement,
 			hoveredOptionElement,
-			isShownOnce;
+			isShownOnce,
+			defaults = Object.clone(GLOBAL_DEFAULTS);
 
 		/**
 		 * Dropdown is created
@@ -262,11 +263,6 @@ var DropDown = (function(DX, window, document, undefined) {
 			DX.Bem.removeModifier(block, M_HIDDEN, CN_DROPDOWN);
 			DX.Bem.addModifier(block, M_SHOWN, CN_DROPDOWN);
 			rePosition(block, control);
-
-			document.addEventListener('touchend', function(e) {
-				documentClickHandler(e);
-				e.preventDefault();
-			}, true);
 
 			document.addEventListener('mousedown', function(e) {
 				documentClickHandler(e);
