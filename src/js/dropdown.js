@@ -29,7 +29,7 @@ var DropDown = (function(DX, window, document, undefined) {
 			CN_ARROW = CN_DROPDOWN + '--arrow',
 			A_FOR = 'data-for',
 			ESC_KEY_CODE = 27,
-			GLOBAL_DEFAULTS = {
+			defaults = {
 				modifiers: [],
 				width: 'control',
 				optionTmpl: '<li class="{%= classNames %}" value="{%= value %}" {%= dataAttrs %}>{%= text %}</li>',
@@ -182,8 +182,7 @@ var DropDown = (function(DX, window, document, undefined) {
 			optionElements,
 			selectedOptionElement,
 			hoveredOptionElement,
-			isShownOnce,
-			defaults = Object.clone(GLOBAL_DEFAULTS);
+			isShownOnce;
 
 		/**
 		 * Dropdown is created
