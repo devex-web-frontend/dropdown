@@ -26,13 +26,13 @@ var DropDown = (function(DX, window, document, undefined) {
 			M_HOVERED = 'hovered',
 			CN_GROUP = CN_DROPDOWN + '--group',
 			CN_GROUP_TITLE = CN_DROPDOWN + '--groupTitle',
-			CN_ARROW = CN_DROPDOWN + '--arrow',
 			A_FOR = 'data-for',
 			ESC_KEY_CODE = 27,
 			defaults = {
 				modifiers: [],
 				width: 'control',
-				optionTmpl: '<li class="{%= classNames %}" value="{%= value %}" {%= dataAttrs %}>{%= text %}</li>',
+				optionTmpl: '<li class="{%= classNames %}" value="{%= value %}" {%= dataAttrs %}>{%= text %}{%= currentMarkTmpl %}</li>',
+				currentMarkTmpl: null,
 				groupTmpl: [
 					'<li class="' + CN_GROUP + '">',
 					'<span class="' + CN_GROUP_TITLE + '">{%= title %}</span>',
@@ -44,8 +44,7 @@ var DropDown = (function(DX, window, document, undefined) {
 					'<div class="' + CN_LIST_WRAP + '">',
 					'<ul class="' + CN_LIST + '"></ul>',
 					'</div>',
-					'</div>',
-					'<span class="' + CN_ARROW + '"></span>'
+					'</div>'
 				].join(''),
 				hideOnClick: true
 			};
@@ -124,6 +123,7 @@ var DropDown = (function(DX, window, document, undefined) {
 
 			data.dataAttrs = dataAttrs;
 		}
+		data.currentMarkTmpl = defaults.currentMarkTmpl;
 
 		return DX.Tmpl.process(template, data);
 	}
