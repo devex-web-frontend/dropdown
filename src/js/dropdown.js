@@ -110,7 +110,7 @@ var DropDown = (function(DX, window, document, undefined) {
 		return DX.Tmpl.process(config.groupTmpl, data);
 	}
 
-	function getOptionHTML(data, template) {
+	function getOptionHTML(data, config) {
 		var dataAttrs = '';
 		var template = config.optionTmpl;
 		data = Object.assign({}, data);
@@ -124,7 +124,6 @@ var DropDown = (function(DX, window, document, undefined) {
 
 			data.dataAttrs = dataAttrs;
 		}
-
 
 		data.currentMarkTmpl = config.currentMarkTmpl;
 		data.optionInnerTmpl = DX.Tmpl.process(config.optionInnerTmpl, data);
