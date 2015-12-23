@@ -111,8 +111,8 @@ var DropDown = (function(DX, window, document, undefined) {
 	}
 
 	function getOptionHTML(data, config) {
-		var dataAttrs = '';
-		var template = config.optionTmpl;
+		var dataAttrs = '',
+			template = config.optionTmpl;
 		data = Object.assign({}, data);
 		data.classNames = DX.Bem.createModifiedClassName(CN_OPTION, data.modifiers);
 

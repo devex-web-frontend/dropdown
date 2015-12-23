@@ -12,7 +12,8 @@ describe('DropDown', function() {
 			},
 			{
 				value: 'batman',
-				text: 'super rich'
+				text: 'super rich',
+				icon: '%'
 			},
 			{
 				value: 'flash',
@@ -56,16 +57,15 @@ describe('DropDown', function() {
 			expect(document.querySelector('.dropDown--container')).not.toBeNull();
 			expect(document.querySelector('.dropDown--listWrap')).not.toBeNull();
 			expect(document.querySelector('.dropDown--list')).not.toBeNull();
-			expect(document.querySelector('.dropDown--arrow')).not.toBeNull();
 		});
-
-		it('should initialize normally when custom dropdown template provided without .dropDown--list element', function() {
-			expect(function() {
-				dropDown = new DropDown(testElement, {
-					innerTmpl:'<div></div>'
-				});
-			}).not.toThrow();
-		});
+		it('should initialize normally when custom dropdown template provided without .dropDown--list element',
+			function() {
+				expect(function() {
+					dropDown = new DropDown(testElement, {
+						innerTmpl: '<div></div>'
+					});
+				}).not.toThrow();
+			});
 
 		it('should add data-for attribute to the container', function() {
 			var container;
@@ -98,6 +98,42 @@ describe('DropDown', function() {
 			new DropDown(testElement);
 
 			expect(testDropdown).toBe(document.querySelector('.dropDown'));
+		});
+		describe('templates', function() {
+			it('current mark template provided', function() {
+				var customOptions = {
+					currentMarkTmpl: '<span class="current">current</span>'
+				};
+				dropDown = new DropDown(testElement, customOptions);
+				dropDown.setDataList(data);
+				var item = document.querySelector('.dropDown--list li');
+				expect(item.querySelector('.current')).not.toBeNull();
+				expect(item.querySelector('.current').outerHTML).toBe(customOptions.currentMarkTmpl);
+			});
+			it('current mark template NOT provided', function() {
+				dropDown = new DropDown(testElement);
+				dropDown.setDataList(data);
+				var item = document.querySelector('.dropDown--list li');
+				expect(item.querySelector('.current')).toBeNull();
+			});
+			it('inner template provided', function() {
+				var customOptions = {
+					optionInnerTmpl: '<span class="icon">{%= icon %}</span> {%= text %}'
+				};
+				dropDown = new DropDown(testElement, customOptions);
+				dropDown.setDataList(data);
+				var item = document.querySelectorAll('.dropDown--list li')[1];
+				var itemInner = DX.Tmpl.process(customOptions.optionInnerTmpl, data[1]);
+				expect(item.innerHTML).toBe(itemInner)
+
+			});
+			it('inner template NO provided', function() {
+				dropDown = new DropDown(testElement);
+				dropDown.setDataList(data);
+				var item = document.querySelectorAll('.dropDown--list li')[1];
+				expect(item.innerHTML).toBe(data[1].text)
+
+			});
 		});
 	});
 
@@ -140,31 +176,13 @@ describe('DropDown', function() {
 			expect(shownEventHandler).toHaveBeenCalled();
 		});
 
-		it('should add "touchend" and "mousedown" listeners on document', function(){
+		it('should add "mousedown" listeners on document', function() {
 
 			spyOn(document, 'addEventListener');
 			dropDown = new DropDown(testElement);
 			dropDown.show();
 
-			expect(document.addEventListener).toHaveBeenCalled();
-			expect(document.addEventListener.argsForCall[0][0]).toEqual('touchend');
-			expect(document.addEventListener.argsForCall[1][0]).toEqual('mousedown');
-		});
-
-		it('should call "event.preventDefault" on "touchend"', function() {
-
-			var preventMock = {
-				preventDefault: jasmine.createSpy('preventDefault')
-			};
-
-			dropDown = new DropDown(testElement);
-			spyOn(document, 'addEventListener').andCallFake(function(event, cb) {
-				cb(preventMock);
-			});
-
-			dropDown.show();
-
-			expect(preventMock.preventDefault).toHaveBeenCalled();
+			expect(document.addEventListener.argsForCall[0][0]).toEqual('mousedown');
 		});
 
 	});
@@ -270,7 +288,7 @@ describe('DropDown', function() {
 		});
 	});
 
-	describe('#groupOptions', function(){
+	describe('#groupOptions', function() {
 
 		function createGroup(title) {
 			return {

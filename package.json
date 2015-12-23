@@ -20,5 +20,8 @@
     "test": "grunt test --prod",
     "install": "grunt install",
     "build": "grunt build --prod"
+  },
+  "dependencies": {
+    "babel-core": "^5.0.0"
   }
 }
