@@ -19,10 +19,12 @@
 
 </head>
 <body>
-	<div name="test" id="test">
-	</div>
-	<div name="test2" id="test2">
-	</div>
+	<div name="test" id="test"></div>
+
+	<div name="test2" id="test2"></div>
+
+	<div name="test3" id="test3"></div>
+
 <script type="text/javascript">
 	var dropdown = new DropDown(document.getElementById('test'));
 	var data = [
@@ -46,6 +48,23 @@
 	];
 	dropdown2.setDataList(data2);
 	dropdown2.show();
+
+	var customOptions = {
+		optionInnerTmpl: '<span class="icon">{%= icon %}{%= iconNum %}</span> {%= text %}',
+		currentMarkTmpl: '<span class="current">current</span>'
+	};
+	var dropdown3 = new DropDown(document.getElementById('test3'), customOptions);
+	var data3 = [
+		{value: 'superman', text: 'superman', icon:'#', iconNum: '3'},
+		{value: 'batman',  text: 'batman', icon: '$'},
+		{value: 'flash',  text: 'flash', icon: '&'}
+	];
+
+	dropdown3.setDataList(data3);
+	dropdown3.setSelectedIndex(1)
+	dropdown3.show();
+
+
 </script>
 </body>
 </html>
