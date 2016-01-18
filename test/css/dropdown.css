@@ -1,0 +1,10 @@
+.icon {
+	color: #6DAE38;
+}
+.current {
+	display: none;
+	color: #749FC1;
+}
+.dropDown--option-selected .current{
+	display: inline-block;
+}

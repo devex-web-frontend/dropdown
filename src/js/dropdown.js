@@ -26,13 +26,14 @@ var DropDown = (function(DX, window, document, undefined) {
 			M_HOVERED = 'hovered',
 			CN_GROUP = CN_DROPDOWN + '--group',
 			CN_GROUP_TITLE = CN_DROPDOWN + '--groupTitle',
-			CN_ARROW = CN_DROPDOWN + '--arrow',
 			A_FOR = 'data-for',
 			ESC_KEY_CODE = 27,
 			defaults = {
 				modifiers: [],
 				width: 'control',
-				optionTmpl: '<li class="{%= classNames %}" value="{%= value %}" {%= dataAttrs %}>{%= text %}</li>',
+				optionTmpl: '<li class="{%= classNames %}" value="{%= value %}" {%= dataAttrs %}>{%= optionInnerTmpl %}{%= currentMarkTmpl %}</li>',
+				optionInnerTmpl: '{%= text %}',
+				currentMarkTmpl: null,
 				groupTmpl: [
 					'<li class="' + CN_GROUP + '">',
 					'<span class="' + CN_GROUP_TITLE + '">{%= title %}</span>',
@@ -44,8 +45,7 @@ var DropDown = (function(DX, window, document, undefined) {
 					'<div class="' + CN_LIST_WRAP + '">',
 					'<ul class="' + CN_LIST + '"></ul>',
 					'</div>',
-					'</div>',
-					'<span class="' + CN_ARROW + '"></span>'
+					'</div>'
 				].join(''),
 				hideOnClick: true
 			};
@@ -97,7 +97,7 @@ var DropDown = (function(DX, window, document, undefined) {
 			var result = '';
 			if (isObject(item)) {
 				var isItGroup = Array.isArray(item.options);
-				result = prevValue + (isItGroup ? getOptgroupHTML(item, config) : getOptionHTML(item, config.optionTmpl));
+				result = prevValue + (isItGroup ? getOptgroupHTML(item, config) : getOptionHTML(item, config));
 			}
 			return result;
 		}, '');
@@ -110,10 +110,10 @@ var DropDown = (function(DX, window, document, undefined) {
 		return DX.Tmpl.process(config.groupTmpl, data);
 	}
 
-	function getOptionHTML(data, template) {
-		var dataAttrs = '';
-
-		data = Object.assign({},data);
+	function getOptionHTML(data, config) {
+		var dataAttrs = '',
+			template = config.optionTmpl;
+		data = Object.assign({}, data);
 		data.classNames = DX.Bem.createModifiedClassName(CN_OPTION, data.modifiers);
 
 		if (data.data) {
@@ -124,6 +124,9 @@ var DropDown = (function(DX, window, document, undefined) {
 
 			data.dataAttrs = dataAttrs;
 		}
+
+		data.currentMarkTmpl = config.currentMarkTmpl;
+		data.optionInnerTmpl = DX.Tmpl.process(config.optionInnerTmpl, data);
 
 		return DX.Tmpl.process(template, data);
 	}
@@ -173,7 +176,7 @@ var DropDown = (function(DX, window, document, undefined) {
 	 * Creates new dropdown
 	 * @constructor DropDown
 	 * @param {Node|Element} control
-	 * @param {Object} config - {Array:modifiers, String|Number:width, String:optionTmpl, String:groupTmpl, String:innerTmpl}
+	 * @param {Object} config - {Array:modifiers, String|Number:width, String:optionTmpl, String:groupTmpl, String:innerTmpl, String:currentMarkTmpl}
 	 */
 	return function DropDown(control, config) {
 		var elements,
@@ -322,7 +325,6 @@ var DropDown = (function(DX, window, document, undefined) {
 
 			selectedIndex = index;
 			selectedOptionElement = optionElements[index];
-
 			if (selectedOptionElement) {
 				DX.Bem.addModifier(selectedOptionElement, M_SELECTED, CN_OPTION);
 				if (triggerChangeEvent) {
