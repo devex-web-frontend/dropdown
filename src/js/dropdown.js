@@ -1,7 +1,6 @@
 /**
  * @copyright Devexperts
  *
- * @requires Object.clone
  * @requires DX
  * @requires DX.Measure
  * @requires DX.Dom
