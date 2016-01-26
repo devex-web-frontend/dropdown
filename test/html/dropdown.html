@@ -25,6 +25,8 @@
 
 	<div name="test3" id="test3"></div>
 
+	<div name="test4" id="test4"></div>
+
 <script type="text/javascript">
 	var dropdown = new DropDown(document.getElementById('test'));
 	var data = [
@@ -63,6 +65,29 @@
 	dropdown3.setDataList(data3);
 	dropdown3.setSelectedIndex(1)
 	dropdown3.show();
+
+	var dropdown4 = new DropDown(document.getElementById('test4'));
+	var data4 = [
+		{
+			title:'First group',
+			options: [
+				{"value": "1", "text": "wow"},
+				{"value": "2", "text": "such"},
+				{"value": "3", "text": "dropdown"}
+			]
+		},
+		{
+			options: [
+				{"value": "4", "text": "wow2"},
+				{"value": "5", "text": "such2"},
+				{"value": "6", "text": "dropdown2"}
+			]
+		}
+	];
+	dropdown4.setDataList(data4);
+	dropdown4.setSelectedIndex(4)
+	dropdown4.show();
+
 
 
 </script>
