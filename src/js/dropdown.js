@@ -35,7 +35,7 @@ var DropDown = (function(DX, window, document, undefined) {
 				currentMarkTmpl: null,
 				groupTmpl: [
 					'<li class="' + CN_GROUP + '">',
-					'<span class="' + CN_GROUP_TITLE + '">{%= title %}</span>',
+					'<span class="' + CN_GROUP_TITLE + '">{%= label %}</span>',
 					'<ul>{%= optionList %}</ul>',
 					'</li>'
 				].join(''),
