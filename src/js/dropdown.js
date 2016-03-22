@@ -170,7 +170,9 @@ var DropDown = (function(DX, window, document, undefined) {
 
 	}
 
-	document.addEventListener(DX.Event.KEY_DOWN, keyDownHandler);
+	if (typeof document !== 'undefined') {
+		document.addEventListener(DX.Event.KEY_DOWN, keyDownHandler);
+	}
 	/**
 	 * Creates new dropdown
 	 * @constructor DropDown
