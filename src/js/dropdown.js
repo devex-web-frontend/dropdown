@@ -11,7 +11,7 @@
  * @namespace
  */
 
-var DropDown = (function(DX, window, document, undefined) {
+var DropDown = (function(DX) {
 	'use strict';
 
 	var CN_DROPDOWN = 'dropDown',
@@ -432,7 +432,7 @@ var DropDown = (function(DX, window, document, undefined) {
 		this.getBlock = getBlock;
 		this.getEventTarget = getEventTarget;
 	};
-})(DX, window, document);
+})(DX);
 
 /** @constant
  * @type {string}
