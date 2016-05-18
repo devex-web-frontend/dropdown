@@ -81,7 +81,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('install', ['clean:install', 'shell:install']);
 	grunt.registerTask('check_style', ['jscs', 'jshint']);
 	grunt.registerTask('test', ['check_style', 'clean:coverage', 'karma:unit']);
-	grunt.registerTask('build', ['install', 'test']);
+	grunt.registerTask('build', ['install']);
 	grunt.registerTask("doc", "jsdoc2md");
 	grunt.registerTask('default', ['build']);
 };
