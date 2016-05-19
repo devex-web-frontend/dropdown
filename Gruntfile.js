@@ -74,7 +74,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-karma');
 	grunt.loadNpmTasks('grunt-interactive-shell');
-	grunt.loadNpmTasks('grunt-jscs-checker');
+	grunt.loadNpmTasks('grunt-jscs');
 	grunt.loadNpmTasks("grunt-jsdoc-to-markdown");
 	grunt.loadNpmTasks('grunt-jsdoc');
 
