@@ -1,4 +1,5 @@
 describe('DropDown', function() {
+
 	var data = [
 			{
 				value: 'superman',
@@ -24,10 +25,12 @@ describe('DropDown', function() {
 			'<div id="test"></div>'
 		].join(''),
 		dropDown,
+		dropDownElement,
 		testElement;
 
 	beforeEach(function() {
 		document.body.innerHTML = elTmpl;
+		dropDownElement = null;
 		testElement = document.getElementById('test');
 	});
 
@@ -78,14 +81,14 @@ describe('DropDown', function() {
 		});
 
 		it('should trigger E_CREATED once after DropDown is created', function() {
-			var eventHandler = jasmine.createSpy('eventHandler');
+			var onCreatedFake = jasmine.createSpy('onCreatedFake');
 
-			testElement.addEventListener(DropDown.E_CREATED, eventHandler);
+			testElement.addEventListener(DropDown.E_CREATED, onCreatedFake);
 
 			new DropDown(testElement);
 
-			expect(eventHandler).toHaveBeenCalled();
-			expect(eventHandler.calls.length).toBe(1);
+			expect(onCreatedFake).toHaveBeenCalled();
+			expect(onCreatedFake.calls.count()).toBe(1);
 		});
 
 		it('should pass .dropDown to e.detail of E_CREATED', function() {
@@ -99,7 +102,17 @@ describe('DropDown', function() {
 
 			expect(testDropdown).toBe(document.querySelector('.dropDown'));
 		});
+
+		it('should add "hideALl" listeners on document', function() {
+
+			spyOn(document, 'addEventListener');
+			dropDown = new DropDown(testElement);
+
+			expect(document.addEventListener.calls.argsFor(0)[0]).toEqual(DropDown.E_HIDE_ALL);
+		});
+
 		describe('templates', function() {
+
 			it('current mark template provided', function() {
 				var customOptions = {
 					currentMarkTmpl: '<span class="current">current</span>'
@@ -110,12 +123,14 @@ describe('DropDown', function() {
 				expect(item.querySelector('.current')).not.toBeNull();
 				expect(item.querySelector('.current').outerHTML).toBe(customOptions.currentMarkTmpl);
 			});
+
 			it('current mark template NOT provided', function() {
 				dropDown = new DropDown(testElement);
 				dropDown.setDataList(data);
 				var item = document.querySelector('.dropDown--list li');
 				expect(item.querySelector('.current')).toBeNull();
 			});
+
 			it('inner template provided', function() {
 				var customOptions = {
 					optionInnerTmpl: '<span class="icon">{%= icon %}</span> {%= text %}'
@@ -125,8 +140,8 @@ describe('DropDown', function() {
 				var item = document.querySelectorAll('.dropDown--list li')[1];
 				var itemInner = DX.Tmpl.process(customOptions.optionInnerTmpl, data[1]);
 				expect(item.innerHTML).toBe(itemInner)
-
 			});
+
 			it('inner template NO provided', function() {
 				dropDown = new DropDown(testElement);
 				dropDown.setDataList(data);
@@ -147,23 +162,19 @@ describe('DropDown', function() {
 
 	describe('#show()', function() {
 		it('should add "-shown" modifier to the block', function() {
-			var ddElement;
-
 			dropDown = new DropDown(testElement);
-			ddElement = document.querySelector('.dropDown');
+			dropDownElement = document.querySelector('.dropDown');
 			dropDown.show();
 
-			expect(ddElement.classList.contains('dropDown-shown')).toBe(true);
+			expect(dropDownElement.classList.contains('dropDown-shown')).toBe(true);
 		});
 
 		it('should remove "-hidden" modifier from the block', function() {
-			var ddElement;
-
 			dropDown = new DropDown(testElement);
-			ddElement = document.querySelector('.dropDown');
+			dropDownElement = document.querySelector('.dropDown');
 			dropDown.show();
 
-			expect(ddElement.classList.contains('dropDown-hidden')).toBe(false);
+			expect(dropDownElement.classList.contains('dropDown-hidden')).toBe(false);
 		});
 
 		it('should fire E_SHOWN', function() {
@@ -178,27 +189,49 @@ describe('DropDown', function() {
 
 		it('should add "mousedown" listeners on document', function() {
 
-			spyOn(document, 'addEventListener');
 			dropDown = new DropDown(testElement);
+
+			spyOn(document, 'addEventListener');
+
 			dropDown.show();
 
-			expect(document.addEventListener.argsForCall[0][0]).toEqual('mousedown');
+			expect(document.addEventListener.calls.argsFor(0)[0]).toEqual('mousedown');
+		});
+
+	});
+
+	describe('#hideAll()', function() {
+
+		it('should hide all dropdowns', function() {
+			var dropDowns = [];
+
+			document.body.innerHTML += '<div id="test1"></div>';
+
+			dropDowns.push(new DropDown(testElement));
+			dropDowns.push(new DropDown(document.getElementById('test1')));
+
+
+			dropDowns.forEach(function(dropDown) {
+				dropDown.show();
+			});
+
+			DX.Event.trigger(document, DropDown.E_HIDE_ALL);
+
+			expect(document.querySelectorAll('.dropDown-hidden').length).toEqual(dropDowns.length);
 		});
 
 	});
 
 	describe('#hide()', function() {
 		it('should add "-hidden" modifier to the block', function() {
-			var ddElement;
-
 			dropDown = new DropDown(testElement);
-			ddElement = document.querySelector('.dropDown');
+			dropDownElement = document.querySelector('.dropDown');
 			dropDown.hide();
 
-			expect(ddElement.classList.contains('dropDown-hidden')).toBe(true);
+			expect(dropDownElement.classList.contains('dropDown-hidden')).toBe(true);
 		});
 
-		it('should hide dropdown on "click"', function() {
+		it('should hide dropdown on "click"', function(done) {
 			var event;
 
 			new DropDown(testElement);
@@ -208,10 +241,10 @@ describe('DropDown', function() {
 
 			document.dispatchEvent(event);
 
-			waitsFor(function() {
-				return document.querySelectorAll('.dropDown-hidden').length === 0
-			}, "All dropdowns were closed", 300);
-
+			setTimeout(function() {
+				expect(document.querySelectorAll('.dropDown-visible').length).toEqual(0);
+				done();
+			}, 300);
 		});
 
 		it('should hide dropdown on "touchend"', function() {
@@ -224,15 +257,15 @@ describe('DropDown', function() {
 
 			document.dispatchEvent(event);
 
-			waitsFor(function() {
-				return document.querySelectorAll('.dropDown-hidden').length === 0
-			}, "All dropdowns were closed", 300);
+			setTimeout(function() {
+				expect(document.querySelectorAll('.dropDown-hidden').length === 0).toEqual(0);
+				done();
+			}, 300);
 
 		});
 
 		it('should hide all dropdowns on esc', function() {
-			var ddElement,
-				event;
+			var event;
 
 			document.body.innerHTML += '<div id="test1"></div>';
 
@@ -245,20 +278,20 @@ describe('DropDown', function() {
 
 			document.dispatchEvent(event);
 
-			waitsFor(function() {
-				return document.querySelectorAll('.dropDown-hidden').length === 0
-			}, "All dropdowns were closed", 300);
+			setTimeout(function() {
+				expect(document.querySelectorAll('.dropDown-hidden').length).toEqual(0);
+				done();
+			}, 300);
+
 
 		});
 
 		it('should remove "-shown" modifier from the container', function() {
-			var ddElement;
-
 			dropDown = new DropDown(testElement);
-			ddElement = document.querySelector('.dropDown');
+			dropDownElement = document.querySelector('.dropDown');
 			dropDown.hide();
 
-			expect(ddElement.classList.contains('dropDown-shown')).toBe(false);
+			expect(dropDownElement.classList.contains('dropDown-shown')).toBe(false);
 		});
 
 		it('should fire E_HIDDEN', function() {
@@ -435,10 +468,12 @@ describe('DropDown', function() {
 
 	describe('Constants', function() {
 		it('should provide event names as public constants', function() {
-			expect(DropDown.E_CHANGED).toBe('dropdown:changed');
+			expect(DropDown.E_CREATED).toBe('dropdown:created');
 			expect(DropDown.E_SHOWN).toBe('dropdown:shown');
 			expect(DropDown.E_HIDDEN).toBe('dropdown:hidden');
-			expect(DropDown.E_CREATED).toBe('dropdown:created');
+			expect(DropDown.E_CHANGED).toBe('dropdown:changed');
+			expect(DropDown.E_HIDE).toBe('dropdown:hide');
+			expect(DropDown.E_HIDE_ALL).toBe('dropdown:hideAll');
 		});
 	});
 });
