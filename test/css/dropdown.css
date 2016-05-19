@@ -1,10 +1,120 @@
-.icon {
-	color: #6DAE38;
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700,600italic,300italic,700italic");
+
+html,
+body {
+	height: 100%;
 }
-.current {
+html {
+	font-size: 10px;
+}
+body {
+	font-family: "Open Sans", Arial, sans-serif;
+	font-size: 1.2em;
+	font-weight: 300;
+	background: #2b2b29;
+	padding: 20px;
+}
+
+.dropDown--list ul,
+.dropDown--list {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.dropDown {
+	position: relative;
+	box-sizing: border-box;
 	display: none;
-	color: #749FC1;
+	z-index: 39;
+	margin-bottom: 20px;
 }
-.dropDown--option-selected .current{
-	display: inline-block;
+.dropDown-shown {
+	display: block;
+}
+.dropDown {
+	margin-top: 0.084em;
+	border: 1px solid;
+}
+.dropDown--option {
+	box-sizing: border-box;
+	padding: 0.166em 0.416em;
+	line-height: 1.75em;
+	font-size: 1em;
+	overflow: ellipsis;
+	cursor: pointer;
+	border-radius: 0.166em;
+}
+.dropDown--option-selected {
+	padding-right: 1.83em;
+	color: #fff;
+	font-weight: bold;
+}
+.dropDown--option-selected .dropDown--selectedIcon {
+	display: block;
+}
+.dropDown--optionIcon {
+	vertical-align: middle;
+	margin-right: 0.416em;
+}
+.dropDown--selectedIcon {
+	content: '';
+	display: none;
+	position: absolute;
+	right: 0.417em;
+	top: 0.548em;
+	bottom: 0;
+	font-size: 0.834em;
+}
+.dropDown--list {
+	padding: 0;
+	list-style: none;
+}
+.dropDown.dropDown-directionUp {
+	margin: 0 0 0.084em 0;
+}
+.dropDown {
+	border-color: transparent;
+	background-color: #3d3b39;
+	color: #ccc;
+	box-shadow: inset 0 1px 0 rgba(0,0,0,0.06), inset -1px 0 0 rgba(0,0,0,0.04), inset 0 -1px 0 rgba(0,0,0,0.02), inset 1px 0 0 rgba(0,0,0,0.04), 0 1px 1px #000;
+}
+.dropDown.dropDown-directionUp {
+	box-shadow: inset 0 1px 0 rgba(0,0,0,0.06), inset -1px 0 0 rgba(0,0,0,0.04), inset 0 -1px 0 rgba(0,0,0,0.02), inset 1px 0 0 rgba(0,0,0,0.04), 0 -1px 1px #000;
+}
+.dropDown--option {
+	position: relative;
+}
+.dropDown--option:hover,
+.dropDown--option-highlight {
+	color: #ffc973;
+}
+.dropDown--option:hover .dropDown--optionIcon svg,
+.dropDown--option-highlight .dropDown--optionIcon svg {
+	fill: #ffc973;
+}
+.dropDown--option:hover {
+	background-color: #43413f;
+}
+.dropDown--option .icon svg {
+	fill: #999;
+}
+.dropDown--option-selected .dropDown--selectedIcon svg {
+	fill: #999;
+}
+.dropDown--option-selected:hover .dropDown--selectedIcon svg {
+	fill: #ffc973;
+}
+
+.wrapper div{
+	width: 200px;
+}
+
+.dropDown {
+	left: 0 !important;
+	float: left;
+	clear: both;
+}
+.dropDown-hidden {
+	display: block;
 }
