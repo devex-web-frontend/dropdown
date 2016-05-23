@@ -212,6 +212,7 @@ var DropDown = (function(DX) {
 		function initListeners() {
 			var block = getEventTarget();
 			block.addEventListener(DropDown.E_HIDE, hide);
+			document.addEventListener(DropDown.E_HIDE_ALL, hideAllDropDowns);
 
 			if (elements.list) {
 				elements.list.addEventListener('click', function(e) {
@@ -464,6 +465,15 @@ DropDown.E_CHANGED = 'dropdown:changed';
  * @memberof DropDown
  */
 DropDown.E_HIDE = 'dropdown:hide';
+
+/**
+ * @constant
+ * @type {string}
+ * @default
+ * @memberof DropDown
+ */
+DropDown.E_HIDE_ALL = 'dropdown:hideAll';
+
 /**
  * Gets if there is any shown dropdown
  * @method isAnyShown

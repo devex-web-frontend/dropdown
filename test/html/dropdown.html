@@ -15,21 +15,29 @@
 	<script type="text/javascript" src="../../lib/dxjs/src/dx.string.js"></script>
 	<script type="text/javascript" src="../../lib/dxjs/src/dx.tmpl.js"></script>
 	<script type="text/javascript" src="../../src/js/dropdown.js"></script>
-	<link rel="stylesheet" media="all" href="../css/dropDown.css">
+	<link rel="stylesheet" media="all" href="../css/dropdown.css">
 
 </head>
 <body>
-	<div name="test" id="test"></div>
+	<div class="wrapper">
+		<button id="hideAll">HIde All Dropdown</button>
 
-	<div name="test2" id="test2"></div>
+		<div name="test" id="test"></div>
 
-	<div name="test3" id="test3"></div>
+		<div name="test2" id="test2"></div>
 
-	<div name="test4" id="test4"></div>
+		<div name="test3" id="test3"></div>
+
+		<div name="test4" id="test4"></div>
+	</div>
+
+
+
 
 <script type="text/javascript">
-	var dropdown = new DropDown(document.getElementById('test'));
-	var data = [
+	var buttonHideAll = DX.$('hideAll'),
+		dropdown = new DropDown(DX.$('test')),
+		data = [
 		{
 			title: 'dasd',
 			options: [
@@ -39,6 +47,11 @@
 			]
 		}
 	];
+
+	buttonHideAll.addEventListener('click', function(){
+		DX.Event.trigger(document, DropDown.E_HIDE_ALL);
+	});
+
 	dropdown.show();
 	dropdown.setDataList(data);
 
