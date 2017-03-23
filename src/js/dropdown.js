@@ -91,6 +91,22 @@ var DropDown = (function(DX) {
 		}
 	}
 
+	function calculateAnimationDelay(block) {
+		var transitionStepDelay = 0.03,
+			listChildren = block.querySelectorAll(`.${CN_OPTION}, .${CN_GROUP_TITLE}`);
+
+		for(var i=0; i<listChildren.length; i++) {
+			listChildren[i].style.animationDelay = transitionStepDelay * i + 's';
+		}
+	}
+
+	function calculateHeight(block) {
+		block.style.display = 'block';
+		var dropDownHeight = DX.Measure.getSize(block, true).height;
+		block.style.display = '';
+		block.style.height = dropDownHeight + 'px';
+	}
+
 	function getOptionListHTML(data, config) {
 		return data.reduce(function(prevValue, item) {
 			var result = '';
@@ -259,6 +275,8 @@ var DropDown = (function(DX) {
 			if (!isShownOnce) {
 				isShownOnce = true;
 				reCalculateWidth(block, control, config);
+				calculateAnimationDelay(block);
+				calculateHeight(block);
 			}
 
 			setHoveredIndex(0);
