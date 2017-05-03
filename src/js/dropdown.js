@@ -91,16 +91,15 @@ var DropDown = (function(DX) {
 		}
 	}
 
-	function calculateAnimationDelay(block) {
-		var transitionStepDelay = 0.03,
-			listChildren = block.querySelectorAll(`.${CN_OPTION}, .${CN_GROUP_TITLE}`);
+	function reCalculateAnimationDelay(block) {
+		var listChildren = block.querySelectorAll(`.${CN_OPTION}, .${CN_GROUP_TITLE}`);
 
 		for(var i=0; i<listChildren.length; i++) {
-			listChildren[i].style.animationDelay = transitionStepDelay * i + 's';
+			listChildren[i].style.animationDelay = DropDown.animationStepDelay * i + 's';
 		}
 	}
 
-	function calculateHeight(block) {
+	function reCalculateHeight(block) {
 		block.style.display = 'block';
 		var dropDownHeight = DX.Measure.getSize(block, true).height;
 		block.style.display = '';
@@ -491,6 +490,14 @@ DropDown.E_HIDE = 'dropdown:hide';
  * @memberof DropDown
  */
 DropDown.E_HIDE_ALL = 'dropdown:hideAll';
+
+/**
+ * @constant
+ * @type {number}
+ * @default
+ * @memberof DropDown
+ */
+DropDown.animationStepDelay = 0.03;
 
 /**
  * Gets if there is any shown dropdown
