@@ -46,7 +46,8 @@ var DropDown = (function(DX) {
 					'</div>',
 					'</div>'
 				].join(''),
-				hideOnClick: true
+				hideOnClick: true,
+				animationStepDelay = 0.03;
 			};
 
 	/**
@@ -91,11 +92,11 @@ var DropDown = (function(DX) {
 		}
 	}
 
-	function reCalculateAnimationDelay(block) {
+	function reCalculateAnimationDelay(block, config) {
 		var listChildren = block.querySelectorAll(`.${CN_OPTION}, .${CN_GROUP_TITLE}`);
 
 		for(var i=0; i<listChildren.length; i++) {
-			listChildren[i].style.animationDelay = DropDown.animationStepDelay * i + 's';
+			listChildren[i].style.animationDelay = config.animationStepDelay * i + 's';
 		}
 	}
 
@@ -274,8 +275,8 @@ var DropDown = (function(DX) {
 			if (!isShownOnce) {
 				isShownOnce = true;
 				reCalculateWidth(block, control, config);
-				calculateAnimationDelay(block);
-				calculateHeight(block);
+				reCalculateAnimationDelay(block, config);
+				reCalculateHeight(block);
 			}
 
 			setHoveredIndex(0);
@@ -490,14 +491,6 @@ DropDown.E_HIDE = 'dropdown:hide';
  * @memberof DropDown
  */
 DropDown.E_HIDE_ALL = 'dropdown:hideAll';
-
-/**
- * @constant
- * @type {number}
- * @default
- * @memberof DropDown
- */
-DropDown.animationStepDelay = 0.03;
 
 /**
  * Gets if there is any shown dropdown
