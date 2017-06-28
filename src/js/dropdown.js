@@ -47,7 +47,7 @@ var DropDown = (function(DX) {
 					'</div>'
 				].join(''),
 				hideOnClick: true,
-				animationStepDelay = 0.03;
+				animationStepDelay: 0.03
 			};
 
 	/**
