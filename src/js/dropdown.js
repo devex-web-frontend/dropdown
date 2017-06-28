@@ -46,7 +46,8 @@ var DropDown = (function(DX) {
 					'</div>',
 					'</div>'
 				].join(''),
-				hideOnClick: true
+				hideOnClick: true,
+				animationStepDelay: 0.03
 			};
 
 	/**
@@ -89,6 +90,21 @@ var DropDown = (function(DX) {
 		} else {
 			block.style.width = config.width + 'px';
 		}
+	}
+
+	function reCalculateAnimationDelay(block, config) {
+		var listChildren = block.querySelectorAll(`.${CN_OPTION}, .${CN_GROUP_TITLE}`);
+
+		for(var i=0; i<listChildren.length; i++) {
+			listChildren[i].style.animationDelay = config.animationStepDelay * i + 's';
+		}
+	}
+
+	function reCalculateHeight(block) {
+		block.style.display = 'block';
+		var dropDownHeight = DX.Measure.getSize(block, true).height;
+		block.style.display = '';
+		block.style.height = dropDownHeight + 'px';
 	}
 
 	function getOptionListHTML(data, config) {
@@ -259,6 +275,8 @@ var DropDown = (function(DX) {
 			if (!isShownOnce) {
 				isShownOnce = true;
 				reCalculateWidth(block, control, config);
+				reCalculateAnimationDelay(block, config);
+				reCalculateHeight(block);
 			}
 
 			setHoveredIndex(0);
