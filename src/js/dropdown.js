@@ -231,26 +231,31 @@ var DropDown = (function(DX) {
 			document.addEventListener(DropDown.E_HIDE_ALL, hideAllDropDowns);
 
 			if (elements.list) {
-				elements.list.addEventListener('click', function(e) {
-					var optionElement = DX.Dom.getAscendantByClassName(e.target, CN_OPTION),
-						index;
-
-					if (optionElement) {
-						index = Array.prototype.indexOf.call(optionElements, optionElement);
-
-						if (index !== selectedIndex) {
-							selectedIndex = index;
-							setSelectedIndex(index);
-							DX.Event.trigger(elements.block, DropDown.E_CHANGED);
-						}
-
-						if (config.hideOnClick) {
-							hide();
-						}
-					}
-				}, true);
+				elements.list.addEventListener('click', elementsListClickHandler, true);
 			}
 		}
+
+		/**
+		 * Dropdown is destroyed
+		 *
+		 * @event dropdown:destroyed
+		 */
+		function destroy() {
+			removeListeners();
+			elements.block.remove();
+
+			DX.Event.trigger(elements.block, DropDown.E_DESTROYED);
+		}
+		function removeListeners() {
+			var block = getEventTarget();
+			block.removeEventListener(DropDown.E_HIDE, hide);
+			document.removeEventListener(DropDown.E_HIDE_ALL, hideAllDropDowns);
+
+			if (elements.list) {
+				elements.list.removeEventListener('click', elementsListClickHandler, true);
+			}
+		}
+
 		/**
 		 * Sets popup data list
 		 * @method setDataList
@@ -429,6 +434,24 @@ var DropDown = (function(DX) {
 				hide();
 			}
 		}
+		function elementsListClickHandler(e) {
+			var optionElement = DX.Dom.getAscendantByClassName(e.target, CN_OPTION),
+				index;
+
+			if (optionElement) {
+				index = Array.prototype.indexOf.call(optionElements, optionElement);
+
+				if (index !== selectedIndex) {
+					selectedIndex = index;
+					setSelectedIndex(index);
+					DX.Event.trigger(elements.block, DropDown.E_CHANGED);
+				}
+
+				if (config.hideOnClick) {
+					hide();
+				}
+			}
+		}
 		/**
 		 * Gets whether dropdown is shown
 		 * @method isShown
@@ -459,6 +482,12 @@ var DropDown = (function(DX) {
  * @memberof DropDown
  */
 DropDown.E_CREATED = 'dropdown:created';
+/** @constant
+ * @type {string}
+ * @default
+ * @memberof DropDown
+ */
+DropDown.E_DESTROYED = 'dropdown:destroyed';
 /** @constant
  * @type {string}
  * @default
