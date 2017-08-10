@@ -242,9 +242,8 @@ var DropDown = (function(DX) {
 		 */
 		function destroy() {
 			removeListeners();
-			elements.block.remove();
-
 			DX.Event.trigger(elements.block, DropDown.E_DESTROYED);
+			elements.block.remove();
 		}
 		function removeListeners() {
 			var block = getEventTarget();
