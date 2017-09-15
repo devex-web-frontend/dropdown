@@ -462,6 +462,7 @@ var DropDown = (function(DX) {
 
 		init();
 
+		this.destroy = destroy;
 		this.setDataList = setDataList;
 		this.setSelectedIndex = setSelectedIndex;
 		this.getSelectedIndex = getSelectedIndex;
