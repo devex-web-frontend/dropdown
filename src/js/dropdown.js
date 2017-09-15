@@ -248,8 +248,10 @@ var DropDown = (function(DX) {
 		function removeListeners() {
 			var block = getEventTarget();
 			block.removeEventListener(DropDown.E_HIDE, hide);
-			document.removeEventListener(DropDown.E_HIDE_ALL, hideAllDropDowns);
 			document.removeEventListener(DX.Event.KEY_DOWN, keyDownHandler);
+			if (typeof document !== 'undefined') {
+				document.removeEventListener(DropDown.E_HIDE_ALL, hideAllDropDowns);
+			}
 			document.removeEventListener('mousedown', documentClickHandler, true);
 
 			if (elements.list) {
