@@ -21,6 +21,7 @@
 <body>
 	<div class="wrapper">
 		<button id="hideAll">HIde All Dropdown</button>
+		<button id="destroyAll">Destroy All Dropdown</button>
 
 		<div name="test" id="test"></div>
 
@@ -36,6 +37,7 @@
 
 <script type="text/javascript">
 	var buttonHideAll = DX.$('hideAll'),
+		buttonDestroyAll = DX.$('destroyAll'),
 		dropdown = new DropDown(DX.$('test')),
 		data = [
 		{
@@ -50,6 +52,12 @@
 
 	buttonHideAll.addEventListener('click', function(){
 		DX.Event.trigger(document, DropDown.E_HIDE_ALL);
+	});
+
+	buttonDestroyAll.addEventListener('click', function(){
+		[dropdown, dropdown2, dropdown3].forEach(function(dropdown, index) {
+			dropdown.destroy();
+		});
 	});
 
 	dropdown.show();
