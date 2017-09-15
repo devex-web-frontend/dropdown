@@ -249,6 +249,8 @@ var DropDown = (function(DX) {
 			var block = getEventTarget();
 			block.removeEventListener(DropDown.E_HIDE, hide);
 			document.removeEventListener(DropDown.E_HIDE_ALL, hideAllDropDowns);
+			document.removeEventListener(DX.Event.KEY_DOWN, keyDownHandler);
+			document.removeEventListener('mousedown', documentClickHandler, true);
 
 			if (elements.list) {
 				elements.list.removeEventListener('click', elementsListClickHandler, true);
@@ -290,9 +292,7 @@ var DropDown = (function(DX) {
 			DX.Bem.addModifier(block, M_SHOWN, CN_DROPDOWN);
 			rePosition(block, control);
 
-			document.addEventListener('mousedown', function(e) {
-				documentClickHandler(e);
-			}, true);
+			document.addEventListener('mousedown', documentClickHandler, true);
 
 			DX.Event.trigger(block, DropDown.E_SHOWN);
 		}
