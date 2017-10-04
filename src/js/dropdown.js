@@ -265,8 +265,11 @@ var DropDown = (function(DX) {
 		 * @param {Object} data
 		 */
 		function setDataList(data) {
+			var block = elements.block;
+
 			elements.list.innerHTML = getOptionListHTML(data, config);
 			optionElements = DX.$$$('.' + CN_OPTION, elements.list);
+			reCalculateAnimationDelay(block, config);
 		}
 		/**
 		 * Shows dropdown
