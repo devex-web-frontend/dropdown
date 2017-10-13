@@ -93,7 +93,7 @@ var DropDown = (function(DX) {
 	}
 
 	function reCalculateAnimationDelay(block, config) {
-		var listChildren = block.querySelectorAll(`.${CN_OPTION}, .${CN_GROUP_TITLE}`);
+		var listChildren = block.querySelectorAll("." + CN_OPTION + ", ." + CN_GROUP_TITLE);
 
 		for(var i=0; i<listChildren.length; i++) {
 			var delay = config.animationTime / listChildren.length * i;
