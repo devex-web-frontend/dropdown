@@ -103,6 +103,7 @@ var DropDown = (function(DX) {
 	}
 
 	function reCalculateHeight(block) {
+		block.style.height = '';
 		block.style.display = 'block';
 		var dropDownHeight = DX.Measure.getSize(block, true).height;
 		block.style.display = '';
@@ -272,6 +273,7 @@ var DropDown = (function(DX) {
 			elements.list.innerHTML = getOptionListHTML(data, config);
 			optionElements = DX.$$$('.' + CN_OPTION, elements.list);
 			reCalculateAnimationDelay(block, config);
+			reCalculateHeight(block);
 		}
 		/**
 		 * Shows dropdown

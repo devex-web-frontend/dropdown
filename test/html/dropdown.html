@@ -21,6 +21,7 @@
 <body>
 	<div class="wrapper">
 		<button id="hideAll">HIde All Dropdown</button>
+		<button id="setDataDropdown1">Set Different Data for Dropdown 1</button>
 		<button id="destroyAll">Destroy All Dropdown</button>
 
 		<div name="test" id="test"></div>
@@ -38,17 +39,27 @@
 <script type="text/javascript">
 	var buttonHideAll = DX.$('hideAll'),
 		buttonDestroyAll = DX.$('destroyAll'),
+		buttonSetDataDropdown1 = DX.$('setDataDropdown1'),
 		dropdown = new DropDown(DX.$('test')),
-		data = [
-		{
+		data = [{
 			title: 'dasd',
 			options: [
 				{value: 'superman', text: 'superman'},
 				{value: 'batman',  text: 'batman'},
 				{value: 'flash',  text: 'flash'}
 			]
-		}
-	];
+		}],
+		diffData = [{
+			title: 'dasd',
+			options: [
+				{value: 'ironman', text: 'ironman'},
+				{value: 'thor',  text: 'thor'},
+				{value: 'captainAmerica',  text: 'captainAmerica'},
+				{value: 'hulk',  text: 'hulk'},
+				{value: 'hawkeye',  text: 'hawkeye'},
+				{value: 'blackWidow',  text: 'blackWidow'}
+			]
+		}];
 
 	buttonHideAll.addEventListener('click', function(){
 		DX.Event.trigger(document, DropDown.E_HIDE_ALL);
@@ -58,6 +69,10 @@
 		[dropdown, dropdown2, dropdown3].forEach(function(dropdown, index) {
 			dropdown.destroy();
 		});
+	});
+
+	buttonSetDataDropdown1.addEventListener('click', function(){
+		dropdown.setDataList(diffData);
 	});
 
 	dropdown.show();
