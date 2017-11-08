@@ -47,7 +47,7 @@ var DropDown = (function(DX) {
 					'</div>'
 				].join(''),
 				hideOnClick: true,
-				animationStepDelay: 0.03
+				animationTime: 0.2
 			};
 
 	/**
@@ -96,7 +96,9 @@ var DropDown = (function(DX) {
 		var listChildren = block.querySelectorAll("." + CN_OPTION + ", ." + CN_GROUP_TITLE);
 
 		for(var i=0; i<listChildren.length; i++) {
-			listChildren[i].style.animationDelay = config.animationStepDelay * i + 's';
+			var delay = config.animationTime / listChildren.length * i;
+
+			listChildren[i].style.animationDelay = delay.toFixed(3) + 's';
 		}
 	}
 
