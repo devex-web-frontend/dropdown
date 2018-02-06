@@ -165,8 +165,6 @@ var DropDown = (function(DX) {
 
 		list = DX.$$('.' + CN_LIST, block);
 
-		body.appendChild(block);
-
 		return {
 			block: block,
 			list: list
@@ -218,16 +216,8 @@ var DropDown = (function(DX) {
 			selectedIndex = 0;
 			hoveredIndex = null;
 			isShownOnce = false;
-
-			initListeners();
-
-			DX.Event.trigger(control, DropDown.E_CREATED, {
-				detail: {
-					block: elements.block,
-					eventTarget: elements.block
-				}
-			});
 		}
+
 		function initListeners() {
 			var block = getEventTarget();
 			block.addEventListener(DropDown.E_HIDE, hide);
@@ -285,7 +275,19 @@ var DropDown = (function(DX) {
 		 * @event dropdown:shown
 		 */
 		function show() {
-			var block = elements.block;
+			var body = document.body,
+				block = elements.block;
+
+            initListeners();
+
+            DX.Event.trigger(control, DropDown.E_CREATED, {
+                detail: {
+                    block: elements.block,
+                    eventTarget: elements.block
+                }
+            });
+
+            body.appendChild(block);
 
 			if (!isShownOnce) {
 				isShownOnce = true;
@@ -328,6 +330,10 @@ var DropDown = (function(DX) {
 
 			document.removeEventListener(DX.Event.TOUCH_CLICK, documentClickHandler, true);
 			DX.Event.trigger(block, DropDown.E_HIDDEN);
+
+            setTimeout(function() {
+                destroy();
+            }, 250);
 		}
 
 
