@@ -60,28 +60,23 @@ var DropDown = (function(DX) {
 		return type === 'object' && !Array.isArray(param);
 	}
 
-	function rePosition(block, control) {
+	function rePosition(block, blockHeight, control) {
 		var offset = DX.Measure.getPosition(control),
 			controlPosition = control.getBoundingClientRect(),
-			blockPosition,
 			upDirectionTopCoordinates,
-			leftDirectionLeftCoordinates;
+            bottomDirectionTopCoordinates;
 
-		block.style.top = offset.y + controlPosition.height + 'px';
+        upDirectionTopCoordinates =  document.body.scrollTop + controlPosition.top + controlPosition.height;
+        bottomDirectionTopCoordinates = block.parentNode.offsetHeight - (controlPosition.top + controlPosition.height) + controlPosition.height;
+
+        block.style.bottom = '';
 		block.style.left = offset.x + 'px';
+        block.style.top = upDirectionTopCoordinates + 'px';
 
-		blockPosition = block.getBoundingClientRect();
-
-		upDirectionTopCoordinates =  document.body.scrollTop + controlPosition.top - blockPosition.height + controlPosition.height;
-		leftDirectionLeftCoordinates = document.body.scrollLeft + controlPosition.left - blockPosition.width + controlPosition.width;
-
-		if (blockPosition.top + blockPosition.height > window.innerHeight && upDirectionTopCoordinates > 0) {
-			block.style.top = upDirectionTopCoordinates + 'px';
-		}
-
-		if (blockPosition.left + blockPosition.width > window.innerWidth && leftDirectionLeftCoordinates > 0) {
-			block.style.left = leftDirectionLeftCoordinates + 'px';
-		}
+        if (offset.y + controlPosition.height + blockHeight > window.innerHeight && offset.y + controlPosition.height > blockHeight) {
+            block.style.top = '';
+            block.style.bottom = bottomDirectionTopCoordinates + 'px';
+        }
 	}
 
 	function reCalculateWidth(block, control, config) {
@@ -103,12 +98,16 @@ var DropDown = (function(DX) {
 	}
 
 	function reCalculateHeight(block) {
-		block.style.height = '';
-		block.style.display = 'block';
-		var dropDownHeight = DX.Measure.getSize(block, true).height;
-		block.style.display = '';
-		block.style.height = dropDownHeight + 'px';
+        block.style.height = calcHiddenElementHeight(block) + 'px';
 	}
+
+    function calcHiddenElementHeight(block) {
+        block.style.height = '';
+        block.style.display = 'block';
+        var dropDownHeight = DX.Measure.getSize(block, true).height;
+        block.style.display = '';
+        return dropDownHeight;
+    }
 
 	function getOptionListHTML(data, config) {
 		return data.reduce(function(prevValue, item) {
@@ -285,7 +284,8 @@ var DropDown = (function(DX) {
 		 * @event dropdown:shown
 		 */
 		function show() {
-			var block = elements.block;
+			var blockHeight,
+				block = elements.block;
 
 			if (!isShownOnce) {
 				isShownOnce = true;
@@ -294,12 +294,12 @@ var DropDown = (function(DX) {
 				reCalculateHeight(block);
 			}
 
+            blockHeight = calcHiddenElementHeight(block);
 			setHoveredIndex(0);
-
 
 			DX.Bem.removeModifier(block, M_HIDDEN, CN_DROPDOWN);
 			DX.Bem.addModifier(block, M_SHOWN, CN_DROPDOWN);
-			rePosition(block, control);
+			rePosition(block, blockHeight, control);
 
 			document.addEventListener('mousedown', documentClickHandler, true);
 
