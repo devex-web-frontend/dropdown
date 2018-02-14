@@ -235,8 +235,9 @@ var DropDown = (function(DX) {
 		function destroy() {
 			removeListeners();
 			DX.Event.trigger(elements.block, DropDown.E_DESTROYED);
-			elements.block.remove();
+			elements.block.parentNode.removeChild(elements.block);
 		}
+
 		function removeListeners() {
 			var block = getEventTarget();
 			block.removeEventListener(DropDown.E_HIDE, hide);
@@ -277,16 +278,16 @@ var DropDown = (function(DX) {
 			var body = document.body,
 				block = elements.block;
 
-            initListeners();
+			initListeners();
 
-            DX.Event.trigger(control, DropDown.E_CREATED, {
+			DX.Event.trigger(control, DropDown.E_CREATED, {
 				detail: {
 					block: elements.block,
-						eventTarget: elements.block
+					eventTarget: elements.block
 				}
-            });
+			});
 
-            body.appendChild(block);
+			body.appendChild(block);
 
 			if (!isShownOnce) {
 				isShownOnce = true;
@@ -321,7 +322,21 @@ var DropDown = (function(DX) {
 		 * @event dropdown:hide
 		 */
 		function hide() {
-			var block = elements.block;
+			var block = elements.block,
+				prefix = ['webkit', 'moz', 'MS', 'o', ''];
+
+			function PrefixedEvent(element, type, callback) {
+				for (var i = 0; i < prefix.length; i++) {
+					if (!prefix[i]) type = type.toLowerCase();
+					element.addEventListener(prefix[i] + type, callback, false);
+				}
+			}
+
+			function AnimationListener(e) {
+				if (e.animationName === 'slideDropdownUp') {
+					destroy();
+				}
+			}
 
 			clearHoveredIndex();
 			DX.Bem.removeModifier(block, M_SHOWN, CN_DROPDOWN);
@@ -329,10 +344,8 @@ var DropDown = (function(DX) {
 
 			document.removeEventListener(DX.Event.TOUCH_CLICK, documentClickHandler, true);
 			DX.Event.trigger(block, DropDown.E_HIDDEN);
-
-            setTimeout(function() {
-				destroy();
-			}, 250);
+			
+			PrefixedEvent(block, 'AnimationEnd', AnimationListener);
 		}
 
 
