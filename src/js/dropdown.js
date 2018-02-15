@@ -351,7 +351,7 @@ var DropDown = (function(DX) {
 			document.removeEventListener(DX.Event.TOUCH_CLICK, documentClickHandler, true);
 			DX.Event.trigger(block, DropDown.E_HIDDEN);
 
-            prefixedEvent(block, 'AnimationEnd', animationListener, false);
+			prefixedEvent(block, 'AnimationEnd', animationListener, false);
 		}
 
 
