@@ -150,8 +150,7 @@ var DropDown = (function(DX) {
 	}
 
 	function createElements(control, config) {
-		var body = document.body,
-			block,
+		var block,
 			list;
 
 		block = DX.Dom.createElement('div', {
@@ -164,8 +163,6 @@ var DropDown = (function(DX) {
 		}
 
 		list = DX.$$('.' + CN_LIST, block);
-
-		body.appendChild(block);
 
 		return {
 			block: block,
@@ -192,6 +189,20 @@ var DropDown = (function(DX) {
 	if (typeof document !== 'undefined') {
 		document.addEventListener(DX.Event.KEY_DOWN, keyDownHandler);
 	}
+
+	function prefixedEvent(element, type, callback, removeEvent) {
+		var prefix = ['webkit', 'moz', 'MS', 'o', ''];
+		for (var i = 0; i < prefix.length; i++) {
+			if (!prefix[i]) type = type.toLowerCase();
+
+			if (removeEvent) {
+				element.removeEventListener(prefix[i] + type, callback, false);
+			} else {
+				element.addEventListener(prefix[i] + type, callback, false);
+			}
+		}
+	}
+
 	/**
 	 * Creates new dropdown
 	 * @constructor DropDown
@@ -218,16 +229,8 @@ var DropDown = (function(DX) {
 			selectedIndex = 0;
 			hoveredIndex = null;
 			isShownOnce = false;
-
-			initListeners();
-
-			DX.Event.trigger(control, DropDown.E_CREATED, {
-				detail: {
-					block: elements.block,
-					eventTarget: elements.block
-				}
-			});
 		}
+
 		function initListeners() {
 			var block = getEventTarget();
 			block.addEventListener(DropDown.E_HIDE, hide);
@@ -246,11 +249,13 @@ var DropDown = (function(DX) {
 		function destroy() {
 			removeListeners();
 			DX.Event.trigger(elements.block, DropDown.E_DESTROYED);
-			elements.block.remove();
+			elements.block.parentNode.removeChild(elements.block);
 		}
+
 		function removeListeners() {
 			var block = getEventTarget();
 			block.removeEventListener(DropDown.E_HIDE, hide);
+			prefixedEvent(block, 'AnimationEnd', animationListener, true);
 			document.removeEventListener(DX.Event.KEY_DOWN, keyDownHandler);
 			if (typeof document !== 'undefined') {
 				document.removeEventListener(DropDown.E_HIDE_ALL, hideAllDropDowns);
@@ -259,6 +264,12 @@ var DropDown = (function(DX) {
 
 			if (elements.list) {
 				elements.list.removeEventListener('click', elementsListClickHandler, true);
+			}
+		}
+
+		function animationListener(e) {
+			if (e.animationName === 'slideDropdownUp') {
+				destroy();
 			}
 		}
 
@@ -285,7 +296,19 @@ var DropDown = (function(DX) {
 		 * @event dropdown:shown
 		 */
 		function show() {
-			var block = elements.block;
+			var body = document.body,
+				block = elements.block;
+
+			initListeners();
+
+			DX.Event.trigger(control, DropDown.E_CREATED, {
+				detail: {
+					block: elements.block,
+					eventTarget: elements.block
+				}
+			});
+
+			body.appendChild(block);
 
 			if (!isShownOnce) {
 				isShownOnce = true;
@@ -295,7 +318,6 @@ var DropDown = (function(DX) {
 			}
 
 			setHoveredIndex(0);
-
 
 			DX.Bem.removeModifier(block, M_HIDDEN, CN_DROPDOWN);
 			DX.Bem.addModifier(block, M_SHOWN, CN_DROPDOWN);
@@ -328,6 +350,8 @@ var DropDown = (function(DX) {
 
 			document.removeEventListener(DX.Event.TOUCH_CLICK, documentClickHandler, true);
 			DX.Event.trigger(block, DropDown.E_HIDDEN);
+
+			prefixedEvent(block, 'AnimationEnd', animationListener, false);
 		}
 
 
