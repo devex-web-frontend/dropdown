@@ -204,8 +204,7 @@ var DropDown = (function(DX) {
 			hoveredIndex,
 			optionElements,
 			selectedOptionElement,
-			hoveredOptionElement,
-			isShownOnce;
+			hoveredOptionElement;
 
 		/**
 		 * Dropdown is created
