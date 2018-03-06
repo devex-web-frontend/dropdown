@@ -197,9 +197,57 @@ var DropDown = (function(DX) {
 
 			if (removeEvent) {
 				element.removeEventListener(prefix[i] + type, callback, false);
+                removeScrollHeight(element);
 			} else {
 				element.addEventListener(prefix[i] + type, callback, false);
 			}
+		}
+	}
+
+	function setScrollHeight(block, control) {
+		var height = calcHiddenElementHeight(block),
+		offset = DX.Measure.getPosition(control),
+		controlPosition = control.getBoundingClientRect(),
+		coords = height + offset.y + controlPosition.height,
+		difference = window.innerHeight - coords,
+		minIndent = 25,
+		optionHeight = 27,
+		cutHeight,
+		newHeight;
+
+		if (difference < minIndent) {
+			cutHeight = minIndent - difference;
+			newHeight = height - cutHeight;
+
+			if (newHeight < optionHeight * 2) {
+				newHeight = optionHeight * 2;
+			}
+
+			block.style.height = newHeight + 'px';
+
+			addScrolling(block, newHeight);
+		}
+	}
+
+	function addScrolling(block, height) {
+		var scrollBlock = block.querySelector('.' + CN_LIST_WRAP),
+			scrollable = block.querySelector('.scrollable');
+
+		if (!scrollable) {
+			var	scroll = new Scrollable(scrollBlock);
+		}
+
+		var scrollElement = block.querySelector('.scrollable--wrapper');
+
+		scrollElement.style.height = height + 'px';
+	}
+
+	function removeScrollHeight(block) {
+		var scrollElement = block.querySelector('.scrollable--wrapper');
+
+		if (scrollElement) {
+            block.style.height = '';
+            scrollElement.style.height = '';
 		}
 	}
 
@@ -318,6 +366,7 @@ var DropDown = (function(DX) {
 			}
 
 			setHoveredIndex(0);
+            setScrollHeight(block, control);
 
 			DX.Bem.removeModifier(block, M_HIDDEN, CN_DROPDOWN);
 			DX.Bem.addModifier(block, M_SHOWN, CN_DROPDOWN);
