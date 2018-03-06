@@ -103,11 +103,15 @@ var DropDown = (function (DX) {
     }
 
     function reCalculateHeight(block) {
+        block.style.height = calcHiddenElementHeight(block) + 'px';
+    }
+
+    function calcHiddenElementHeight(block) {
         block.style.height = '';
         block.style.display = 'block';
         var dropDownHeight = DX.Measure.getSize(block, true).height;
         block.style.display = '';
-        block.style.height = dropDownHeight + 'px';
+        return dropDownHeight;
     }
 
     function getOptionListHTML(data, config) {
