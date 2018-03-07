@@ -237,13 +237,13 @@ var DropDown = (function (DX) {
 
     function setScrollHeight(block, control, optionElements) {
         var height = calcHiddenElementHeight(block),
-        offset = DX.Measure.getPosition(control),
-        controlPosition = control.getBoundingClientRect(),
-        coords = height + offset.y + controlPosition.height,
-        difference = window.innerHeight - coords,
-        minIndent = 25,
-        cutHeight,
-        newHeight;
+            offset = DX.Measure.getPosition(control),
+            controlPosition = control.getBoundingClientRect(),
+            coords = height + offset.y + controlPosition.height,
+            difference = window.innerHeight - coords,
+            minIndent = 25,
+            cutHeight,
+            newHeight;
 
         if (difference < minIndent) {
             cutHeight = minIndent - difference;
@@ -261,7 +261,7 @@ var DropDown = (function (DX) {
 
     function addScrolling(block, height) {
         var scrollBlock = block.querySelector('.' + CN_LIST_WRAP),
-        scrollable = block.querySelector('.scrollable');
+            scrollable = block.querySelector('.scrollable');
 
         if (!scrollable) {
             var scroll = new Scrollable(scrollBlock);
