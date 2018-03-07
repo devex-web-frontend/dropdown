@@ -209,23 +209,48 @@ var DropDown = (function (DX) {
         }
     }
 
-    function setScrollHeight(block, control) {
+    function getOptionsHeight(optionElements) {
+        var body = document.body,
+            height;
+
+        optionElements[0].setAttribute('style', '');
+        optionElements[1].setAttribute('style', '');
+
+        var div = document.createElement('div');
+        div.className = 'dropDown dropDown-selectBox';
+        div.setAttribute('style', 'display: block; border: none');
+        div.innerHTML = ['<div class="' + CN_CONTAINER + '">',
+                        '<div class="' + CN_LIST_WRAP + '">',
+                        '<ul class="' + CN_LIST + '">',
+                        optionElements[0].outerHTML,
+                        optionElements[1].outerHTML,
+                        '</ul>',
+                        '</div>',
+                        '</div>'].join('');
+
+        body.appendChild(div);
+        height = div.offsetHeight;
+        div.parentNode.removeChild(div);
+
+        return height;
+    }
+
+    function setScrollHeight(block, control, optionElements) {
         var height = calcHiddenElementHeight(block),
-            offset = DX.Measure.getPosition(control),
-            controlPosition = control.getBoundingClientRect(),
-            coords = height + offset.y + controlPosition.height,
-            difference = window.innerHeight - coords,
-            minIndent = 25,
-            optionHeight = 27,
-            cutHeight,
-            newHeight;
+        offset = DX.Measure.getPosition(control),
+        controlPosition = control.getBoundingClientRect(),
+        coords = height + offset.y + controlPosition.height,
+        difference = window.innerHeight - coords,
+        minIndent = 25,
+        cutHeight,
+        newHeight;
 
         if (difference < minIndent) {
             cutHeight = minIndent - difference;
             newHeight = height - cutHeight;
 
-            if (newHeight < optionHeight * 2) {
-                newHeight = optionHeight * 2;
+            if (newHeight < getOptionsHeight(optionElements)) {
+                newHeight = getOptionsHeight(optionElements);
             }
 
             block.style.height = newHeight + 'px';
@@ -236,7 +261,7 @@ var DropDown = (function (DX) {
 
     function addScrolling(block, height) {
         var scrollBlock = block.querySelector('.' + CN_LIST_WRAP),
-            scrollable = block.querySelector('.scrollable');
+        scrollable = block.querySelector('.scrollable');
 
         if (!scrollable) {
             var scroll = new Scrollable(scrollBlock);
