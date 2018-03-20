@@ -243,14 +243,16 @@ var DropDown = (function (DX) {
             difference = window.innerHeight - coords,
             minIndent = 25,
             cutHeight,
+            optionsHeight,
             newHeight;
 
         if (difference < minIndent) {
             cutHeight = minIndent - difference;
             newHeight = height - cutHeight;
+            optionsHeight = getOptionsHeight(optionElements);
 
-            if (newHeight < getOptionsHeight(optionElements)) {
-                newHeight = getOptionsHeight(optionElements);
+            if (newHeight < optionsHeight) {
+                newHeight = optionsHeight;
             }
 
             block.style.height = newHeight + 'px';
