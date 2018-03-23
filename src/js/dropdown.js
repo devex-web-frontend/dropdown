@@ -295,8 +295,7 @@ var DropDown = (function (DX) {
             hoveredIndex,
             optionElements,
             selectedOptionElement,
-            hoveredOptionElement,
-            isShownOnce;
+            hoveredOptionElement;
 
         /**
          * Dropdown is created
@@ -308,7 +307,6 @@ var DropDown = (function (DX) {
             elements = createElements(control, config);
             selectedIndex = 0;
             hoveredIndex = null;
-            isShownOnce = false;
         }
 
         function initListeners() {
@@ -391,12 +389,9 @@ var DropDown = (function (DX) {
 
             body.appendChild(block);
 
-            if (!isShownOnce) {
-                isShownOnce = true;
-                reCalculateWidth(block, control, config);
-                reCalculateAnimationDelay(block, config);
-                reCalculateHeight(block);
-            }
+            reCalculateWidth(block, control, config);
+            reCalculateAnimationDelay(block, config);
+            reCalculateHeight(block);
 
             setHoveredIndex(0);
             setScrollHeight(block, control);
