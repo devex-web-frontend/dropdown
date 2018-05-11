@@ -394,7 +394,7 @@ var DropDown = (function (DX) {
             reCalculateHeight(block);
 
             setHoveredIndex(0);
-            setScrollHeight(block, control);
+            setScrollHeight(block, control, optionElements);
 
             DX.Bem.removeModifier(block, M_HIDDEN, CN_DROPDOWN);
             DX.Bem.addModifier(block, M_SHOWN, CN_DROPDOWN);
